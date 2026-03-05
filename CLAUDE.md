@@ -1,6 +1,6 @@
 # os-eco
 
-Meta-project for the AI agent tooling ecosystem. This repo tracks cross-cutting concerns across four tightly integrated tools, each living in its own sub-repo.
+Meta-project for the AI agent tooling ecosystem. This repo tracks cross-cutting concerns across six integrated tools, each living in its own sub-repo.
 
 ## Ecosystem Overview
 
@@ -10,17 +10,23 @@ Meta-project for the AI agent tooling ecosystem. This repo tracks cross-cutting 
 | **Seeds** | `sd` | `@os-eco/seeds-cli` | Git-native issue tracking | `seeds/` |
 | **Canopy** | `cn` | `@os-eco/canopy-cli` | Prompt management & composition | `canopy/` |
 | **Overstory** | `overstory` / `ov` | `@os-eco/overstory-cli` | Multi-agent orchestration | `overstory/` |
+| **Sapling** | `sapling` / `sp` | `@os-eco/sapling-cli` | Headless coding agent with proactive context management | `sapling/` |
+| **Greenhouse** | `greenhouse` / `grhs` | `@os-eco/greenhouse-cli` | Autonomous development daemon | `greenhouse/` |
 
 ### Relationship Graph
 
 ```
-overstory (orchestrates agents)
-  ├── mulch (stores expertise for agents)
-  ├── seeds (tracks issues agents work on)
-  └── canopy (manages prompts agents use)
+greenhouse (polls GitHub → dispatches overstory → opens PRs)
+  └── overstory (orchestrates agents)
+        ├── sapling (headless coding agent, alternative runtime)
+        ├── mulch (stores expertise for agents)
+        ├── seeds (tracks issues agents work on)
+        └── canopy (manages prompts agents use)
 ```
 
-- **Overstory** spawns and coordinates Claude Code agents; reads issues from seeds, expertise from mulch
+- **Greenhouse** closes the last manual loop — polls GitHub for triaged issues, creates seeds tasks, dispatches overstory runs, and opens PRs
+- **Overstory** spawns and coordinates agents (Claude Code or Sapling); reads issues from seeds, expertise from mulch
+- **Sapling** is a headless coding agent with proactive context management — an alternative runtime for overstory to dispatch to
 - **Mulch** is passive — agents call `ml record` / `ml prime` to store and retrieve expertise
 - **Seeds** is the issue tracker — `sd create` / `sd ready` / `sd close` drive the work queue
 - **Canopy** manages prompt templates — `cn emit` renders prompts for agent consumption
@@ -51,6 +57,12 @@ cd canopy && bun test && bun run lint && bun run typecheck
 
 # Overstory
 cd overstory && bun test && bun run lint && bun run typecheck
+
+# Sapling
+cd sapling && bun test && bun run lint && bun run typecheck
+
+# Greenhouse
+cd greenhouse && bun test && bun run lint && bun run typecheck
 ```
 
 ## Conventions
