@@ -5,7 +5,7 @@ description: Detect configuration and convention drift across ecosystem repos
 
 ## description
 
-Compare tooling configuration, project structure, and conventions across all six ecosystem repos (mulch, seeds, canopy, overstory, sapling, greenhouse). Identify drift and recommend alignment actions.
+Compare tooling configuration, project structure, and conventions across all seven active ecosystem repos (mulch, seeds, canopy, overstory, sapling, burrow, warren). Identify drift and recommend alignment actions. (Greenhouse was the original sixth tool here — archived 2026-05, superseded by warren; do not include in scans.)
 
 **Argument:** `$ARGUMENTS` — optional: a specific area to audit (e.g., `biome`, `tsconfig`, `commands`, `infrastructure`). If empty, audit everything.
 
@@ -46,14 +46,14 @@ After all agents return, produce a drift report:
 
 For each config area, show which repos align and which diverge:
 
-| Setting | mulch | seeds | canopy | overstory | sapling | greenhouse | Consensus |
+| Setting | mulch | seeds | canopy | overstory | sapling | burrow | warren | Consensus |
 |---------|-------|-------|--------|-----------|---------|------------|-----------|
 
 Mark cells with `✓` (matches consensus), `✗` (diverges), or `—` (not applicable).
 
 ### Infrastructure Completeness
 
-| Item | mulch | seeds | canopy | overstory | sapling | greenhouse |
+| Item | mulch | seeds | canopy | overstory | sapling | burrow | warren |
 |------|-------|-------|--------|-----------|---------|------------|
 | Standard commands (4) | | | | | | |
 | CLAUDE.md onboarding | | | | | | |

@@ -204,7 +204,9 @@ Brand color: `rgb(82, 105, 110)` (slate). Joined the ecosystem 2026-05-13. No it
 
 ---
 
-## Greenhouse (v0.1.2) — In Progress
+## Greenhouse (v0.1.2) — Archived 2026-05
+
+> **Archived 2026-05** — Greenhouse was superseded by warren, which absorbed the autonomous-loop role. The checklist below is preserved for historical reference; outstanding items will not be implemented.
 
 ### Branding — Partial
 - [x] Apply forest palette (brand: `rgb(124, 179, 66)`, accent, muted) — done (v0.1.0, output.ts)

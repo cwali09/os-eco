@@ -2,6 +2,8 @@
 
 Run `bun branding/preview.ts` to see all of this rendered in your terminal.
 
+> **Greenhouse archived 2026-05** — its row in the color palette, banner art, and help-screen template tables is preserved as a historical record of v0.1.2 state at archival. The greenhouse brand color (`rgb(124, 179, 66)` sprout green) is retired and free for re-use by future tools.
+
 ---
 
 ## Color Palette: Forest (earth tones)

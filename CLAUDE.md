@@ -1,10 +1,10 @@
 # os-eco
 
-Meta-project for the AI agent tooling ecosystem. This repo tracks cross-cutting concerns across eight integrated tools, each living in its own sub-repo.
+Meta-project for the AI agent tooling ecosystem. This repo tracks cross-cutting concerns across seven integrated tools, each living in its own sub-repo. (An eighth tool, **greenhouse**, was archived 2026-05 — see "Retired tools" below.)
 
 ## Ecosystem Overview
 
-Tools are grouped by role: **primitives** store the data agents need, **runtimes** execute a single agent, **orchestrators** coordinate many agents, and the **daemon** closes the autonomous loop.
+Tools are grouped by role: **primitives** store the data agents need, **runtimes** execute a single agent, and **orchestrators** coordinate many agents — with **warren** also closing the autonomous loop (GitHub → dispatch → PR).
 
 ### Primitives — context, issues, prompts
 
@@ -21,38 +21,30 @@ Tools are grouped by role: **primitives** store the data agents need, **runtimes
 | **Sapling** | `sapling` / `sp` | `@os-eco/sapling-cli` | Headless coding agent with proactive context management | `sapling/` |
 | **Burrow** | `burrow` / `bw` | `@os-eco/burrow-cli` | OS-isolated sandbox runtime for coding agents (bwrap / sandbox-exec) | `burrow/` |
 
-### Orchestrators — multi-agent coordination
+### Orchestrators — multi-agent coordination & autonomous loop
 
 | Tool | CLI | npm | Purpose | Sub-repo |
 |------|-----|-----|---------|----------|
 | **Overstory** | `overstory` / `ov` | `@os-eco/overstory-cli` | Local multi-agent orchestration via tmux + git worktrees | `overstory/` |
-| **Warren** | `warren` | `@os-eco/warren-cli` | Self-hostable control plane for ephemeral cloud agents | `warren/` |
-
-### Daemon — autonomous loop
-
-| Tool | CLI | npm | Purpose | Sub-repo |
-|------|-----|-----|---------|----------|
-| **Greenhouse** | `greenhouse` / `grhs` | `@os-eco/greenhouse-cli` | Polls GitHub, dispatches runs, opens PRs | `greenhouse/` |
+| **Warren** | `warren` | `@os-eco/warren-cli` | Self-hostable control plane for ephemeral cloud agents. Also closes the autonomous loop (polls GitHub, dispatches runs, opens PRs) — formerly greenhouse's role | `warren/` |
 
 ### How they fit together
 
 ```
-greenhouse                       autonomous outer loop (GitHub → dispatch → PR)
+warren                           autonomous outer loop (GitHub → dispatch → PR)
+   │                             and cloud control plane
+   ├─► overstory  (local)        local orchestrator: tmux + worktrees
    │
-   ├─► overstory  (local)        orchestrators spawn and coordinate agents
-   └─► warren     (cloud)
+   └─► sapling                   runtimes execute a single agent
+       burrow                    (warren embeds burrow for sandboxed runs)
           │
-          ├─► sapling             runtimes execute a single agent
-          └─► burrow              (warren embeds burrow for sandboxed runs)
-                 │
-                 ├─► mulch        primitives feed agents context
-                 ├─► seeds        (expertise, work queue, prompts)
-                 └─► canopy
+          ├─► mulch              primitives feed agents context
+          ├─► seeds              (expertise, work queue, prompts)
+          └─► canopy
 ```
 
-- **Greenhouse** closes the last manual loop — polls GitHub for triaged issues, creates seeds tasks, dispatches an orchestrator run, opens PRs
+- **Warren** closes the autonomous loop AND is the cloud orchestrator — a self-hostable HTTP/UI control plane that polls GitHub for triaged issues, dispatches orchestrator runs, opens PRs, and runs each agent inside a burrow sandbox. Absorbed greenhouse's daemon role in 2026-05
 - **Overstory** is the local orchestrator — tmux + git worktrees, top-down decomposition, SQLite mail
-- **Warren** is the cloud orchestrator — a self-hostable HTTP/UI control plane that runs each agent inside a burrow sandbox
 - **Sapling** is a headless coding agent — an alternative runtime overstory/warren can dispatch to alongside Claude Code
 - **Burrow** is the sandbox primitive — bwrap on Linux, sandbox-exec on macOS; used directly or embedded inside warren
 - **Mulch** is passive — agents call `ml record` / `ml prime` to store and retrieve expertise
@@ -81,8 +73,11 @@ cd sapling     && bun test && bun run lint && bun run typecheck
 cd burrow      && bun test && bun run lint && bun run typecheck
 cd overstory   && bun test && bun run lint && bun run typecheck
 cd warren      && bun test && bun run lint && bun run typecheck
-cd greenhouse  && bun test && bun run lint && bun run typecheck
 ```
+
+## Retired tools
+
+- **Greenhouse** (`greenhouse` / `grhs`, `@os-eco/greenhouse-cli`) — archived 2026-05. Was the autonomous development daemon (GitHub poll → dispatch → PR). Superseded by warren, which absorbed the autonomous-loop role into the same control plane that runs cloud agents. The greenhouse GitHub repo (https://github.com/jayminwest/greenhouse) is archived and readable for historical context; the npm package was never published; the local sub-repo was removed. Records and seeds issues that reference greenhouse are kept for traceability but marked obsolete.
 
 ## Scripts
 

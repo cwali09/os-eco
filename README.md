@@ -7,7 +7,6 @@
 [![Burrow CI](https://github.com/jayminwest/burrow/actions/workflows/ci.yml/badge.svg)](https://github.com/jayminwest/burrow/actions/workflows/ci.yml)
 [![Overstory CI](https://github.com/jayminwest/overstory/actions/workflows/ci.yml/badge.svg)](https://github.com/jayminwest/overstory/actions/workflows/ci.yml)
 [![Warren CI](https://github.com/jayminwest/warren/actions/workflows/ci.yml/badge.svg)](https://github.com/jayminwest/warren/actions/workflows/ci.yml)
-[![Greenhouse CI](https://github.com/jayminwest/greenhouse/actions/workflows/ci.yml/badge.svg)](https://github.com/jayminwest/greenhouse/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 An integrated ecosystem of CLI tools for AI agent workflows. Each tool handles one concern — expertise, issues, prompts, runtime, sandbox, orchestration, or the autonomous loop — and they compose together so multi-agent teams can operate on real codebases.
@@ -35,36 +34,29 @@ Grouped by role: **primitives** hold the data agents need, **runtimes** execute 
 | [**Sapling**](https://github.com/jayminwest/sapling) | `sp` | [![npm](https://img.shields.io/npm/v/@os-eco/sapling-cli)](https://www.npmjs.com/package/@os-eco/sapling-cli) | Headless coding agent — proactive context management between every LLM call, pluggable backends |
 | [**Burrow**](https://github.com/jayminwest/burrow) | `burrow` / `bw` | [![npm](https://img.shields.io/npm/v/@os-eco/burrow-cli)](https://www.npmjs.com/package/@os-eco/burrow-cli) | OS-isolated sandbox runtime — `bwrap` on Linux, `sandbox-exec` on macOS; no Docker, no daemon |
 
-### Orchestrators — multi-agent coordination
+### Orchestrators — multi-agent coordination & autonomous loop
 
 | Tool | CLI | npm | What it does |
 |------|-----|-----|-------------|
 | [**Overstory**](https://github.com/jayminwest/overstory) | `overstory` / `ov` | [![npm](https://img.shields.io/npm/v/@os-eco/overstory-cli)](https://www.npmjs.com/package/@os-eco/overstory-cli) | Local multi-agent orchestration — spawns agents in git worktrees via tmux, coordinates through SQLite mail, merges with conflict resolution |
-| [**Warren**](https://github.com/jayminwest/warren) | `warren` | [![npm](https://img.shields.io/npm/v/@os-eco/warren-cli)](https://www.npmjs.com/package/@os-eco/warren-cli) | Self-hostable control plane for ephemeral cloud agents — one container, one volume, one HTTP API, one UI; embeds burrow per run |
-
-### Daemon — autonomous loop
-
-| Tool | CLI | npm | What it does |
-|------|-----|-----|-------------|
-| [**Greenhouse**](https://github.com/jayminwest/greenhouse) | `greenhouse` / `grhs` | [![npm](https://img.shields.io/npm/v/@os-eco/greenhouse-cli)](https://www.npmjs.com/package/@os-eco/greenhouse-cli) | Autonomous development daemon — polls GitHub for triaged issues, dispatches orchestrator runs, opens PRs |
+| [**Warren**](https://github.com/jayminwest/warren) | `warren` | [![npm](https://img.shields.io/npm/v/@os-eco/warren-cli)](https://www.npmjs.com/package/@os-eco/warren-cli) | Self-hostable control plane for ephemeral cloud agents — one container, one volume, one HTTP API, one UI; embeds burrow per run. Also closes the autonomous loop (GitHub → dispatch → PR), the role formerly held by [greenhouse](#retired-tools) |
 
 ## How they fit together
 
 ```
-greenhouse                       autonomous outer loop (GitHub → dispatch → PR)
+warren                           autonomous outer loop (GitHub → dispatch → PR)
+   │                             and cloud control plane
+   ├─► overstory  (local)        local orchestrator: tmux + worktrees
    │
-   ├─► overstory  (local)        orchestrators spawn and coordinate agents
-   └─► warren     (cloud)
+   └─► sapling                   runtimes execute a single agent
+       burrow                    (warren embeds burrow for sandboxed runs)
           │
-          ├─► sapling             runtimes execute a single agent
-          └─► burrow              (warren embeds burrow for sandboxed runs)
-                 │
-                 ├─► mulch        primitives feed agents context
-                 ├─► seeds        (expertise, work queue, prompts)
-                 └─► canopy
+          ├─► mulch              primitives feed agents context
+          ├─► seeds              (expertise, work queue, prompts)
+          └─► canopy
 ```
 
-Greenhouse closes the manual loop above; below it, orchestrators decompose work and dispatch runtimes; sandbox primitives keep execution safe; data primitives feed every agent the context it needs. All tools share the same design principles:
+Warren closes the manual loop and orchestrates cloud runs; overstory handles local multi-agent decomposition; sandbox primitives keep execution safe; data primitives feed every agent the context it needs. All tools share the same design principles:
 
 - **Git-native storage** — JSONL and YAML files that live in your repo, merge cleanly, and need no external database
 - **Zero runtime dependencies** — each tool is a single Bun binary with no daemon or server
@@ -87,8 +79,7 @@ bun install -g \
 
 # Add orchestration as you need it
 bun install -g @os-eco/overstory-cli       # local, tmux + worktrees
-bun install -g @os-eco/warren-cli          # self-hostable cloud control plane
-bun install -g @os-eco/greenhouse-cli      # autonomous daemon
+bun install -g @os-eco/warren-cli          # self-hostable cloud control plane + autonomous loop
 
 # Initialize in your project
 cd your-project
@@ -143,7 +134,6 @@ os-eco/
   burrow/          # sub-repo: @os-eco/burrow-cli
   overstory/       # sub-repo: @os-eco/overstory-cli
   warren/          # sub-repo: @os-eco/warren-cli
-  greenhouse/      # sub-repo: @os-eco/greenhouse-cli
   branding/        # shared visual spec, CLI standards, checklists
   .mulch/          # ecosystem-level expertise
   .seeds/          # ecosystem-level issues
@@ -162,12 +152,17 @@ cd sapling    && bun test && bun run lint && bun run typecheck
 cd burrow     && bun test && bun run lint && bun run typecheck
 cd overstory  && bun test && bun run lint && bun run typecheck
 cd warren     && bun test && bun run lint && bun run typecheck
-cd greenhouse && bun test && bun run lint && bun run typecheck
 
 # Check ecosystem health
 ov doctor          # checks all tools are installed and healthy
 ov ecosystem       # dashboard with versions, health, and status
 ```
+
+## Retired tools
+
+| Tool | Status | Notes |
+|------|--------|-------|
+| [Greenhouse](https://github.com/jayminwest/greenhouse) | Archived 2026-05 | Autonomous development daemon (polls GitHub → dispatches orchestrator runs → opens PRs). Superseded by **warren**, which absorbed the autonomous-loop role into the same control plane that runs cloud agents. The repo is archived and remains readable for historical reference; the npm package `@os-eco/greenhouse-cli` was never published. |
 
 ## License
 

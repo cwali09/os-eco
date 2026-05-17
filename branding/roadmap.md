@@ -4,18 +4,9 @@ Future work beyond the immediate CLI harmonization and branding.
 
 ---
 
-## Greenhouse CLI Standards Gaps
+## Greenhouse CLI Standards Gaps — Archived 2026-05
 
-Greenhouse (v0.1.2) is the newest tool and has several standards to catch up on:
-
-1. **Help screen Style A** — branded header with tool name in brand color + bold, version muted
-2. **Status icons Set D** — migrate from circular icons (○ ◎ ◉) to `- > x !`
-3. **`-q` short flag** — add to existing `--quiet` option
-4. **`process.exitCode = 1`** — replace `process.exit()` in poll, start, stop, ingest commands
-5. **Typo suggestions** — add Levenshtein "did you mean?" for unknown commands
-6. **Shell completions** — add `completions <shell>` subcommand (bash/zsh/fish)
-7. **Upgrade command** — add `grhs upgrade` with `--check` and `--json`
-8. **Doctor `--fix`** — add auto-remediation to existing doctor command
+> **No longer tracked.** Greenhouse was archived 2026-05 when warren absorbed its autonomous-loop role. The original list (Help Style A, Icon Set D, `-q` flag, `process.exitCode`, typo suggestions, completions, upgrade, doctor `--fix`) is preserved in the archived greenhouse repo for historical reference but will not be implemented.
 
 ---
 
@@ -130,7 +121,7 @@ This requires:
 
 ## Shell Completions — Done (5/8)
 
-Five tools (mulch, seeds, canopy, overstory, sapling) now ship completions for bash, zsh, and fish via a `completions <shell>` subcommand. Greenhouse still needs this; burrow + warren joined post-V1 and their support is unaudited.
+Five tools (mulch, seeds, canopy, overstory, sapling) now ship completions for bash, zsh, and fish via a `completions <shell>` subcommand. Burrow + warren joined post-V1 and their support is unaudited. (Greenhouse was the sixth tool here; archived 2026-05.)
 
 ```bash
 # Generate and install
@@ -142,7 +133,7 @@ sp completions fish > ~/.config/fish/completions/sp.fish
 # grhs completions zsh — not yet implemented
 ```
 
-**Status:** Complete for mulch, seeds, canopy, overstory, sapling. Greenhouse pending. Burrow + warren audit pending.
+**Status:** Complete for mulch, seeds, canopy, overstory, sapling. Burrow + warren audit pending. (Greenhouse archived 2026-05.)
 
 ---
 

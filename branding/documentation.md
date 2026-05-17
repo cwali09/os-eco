@@ -49,8 +49,7 @@ npx @os-eco/<tool>-cli --help
 <tool> is part of the [os-eco](https://github.com/jayminwest/os-eco) AI agent tooling ecosystem.
 
 \`\`\`
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  greenhouse  automation
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  warren      cloud control plane
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  warren      cloud control plane + automation
 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  overstory   orchestration
 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  canopy      prompts
 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  sapling     agents
@@ -128,7 +127,7 @@ The os-eco root README serves as the ecosystem landing page:
 
 - Stacked-layer logo (in the brand colors, or as plain text for GitHub)
 - One-sentence description of each tool
-- Install-all snippet: `bun install -g @os-eco/mulch-cli @os-eco/seeds-cli @os-eco/canopy-cli @os-eco/overstory-cli @os-eco/sapling-cli @os-eco/greenhouse-cli`
+- Install-all snippet: `bun install -g @os-eco/mulch-cli @os-eco/seeds-cli @os-eco/canopy-cli @os-eco/overstory-cli @os-eco/sapling-cli @os-eco/burrow-cli @os-eco/warren-cli`
 - Relationship graph showing how tools interact
 - Links to each sub-repo
 - "Getting Started" section showing a full workflow across tools

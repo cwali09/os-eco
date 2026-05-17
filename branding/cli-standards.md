@@ -1,6 +1,8 @@
 # CLI Standards
 
-Technical conventions that all tools must follow. The original six tools (mulch, seeds, canopy, sapling, overstory, greenhouse) are fully audited against this spec. Burrow (v0.3.0) and warren (v0.3.0) joined post-V1 — their compliance with this spec is not yet audited and is tracked as pending in `checklists.md`.
+Technical conventions that all tools must follow. The original six tools (mulch, seeds, canopy, sapling, overstory, greenhouse) were fully audited against this spec. Burrow (v0.3.0) and warren (v0.3.0) joined post-V1 — their compliance with this spec is not yet audited and is tracked as pending in `checklists.md`.
+
+> **Greenhouse archived 2026-05** — rows below are preserved as a historical audit snapshot (v0.1.2 state at archival). "5/6" or "all 6" counts refer to the original six and no longer reflect the active toolset (5 active + 2 pending audit). Greenhouse gaps will not be closed.
 
 ---
 
