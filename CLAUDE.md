@@ -1,55 +1,68 @@
 # os-eco
 
-Meta-project for the AI agent tooling ecosystem. This repo tracks cross-cutting concerns across seven integrated tools, each living in its own sub-repo. (An eighth tool, **greenhouse**, was archived 2026-05 — see "Retired tools" below.)
+Meta-project for the AI agent tooling ecosystem. This repo tracks cross-cutting concerns across **eight integrated tools**, each living in its own sub-repo. (A ninth tool, **greenhouse**, was archived 2026-05 — see "Retired tools" below.)
+
+**Warren is the headline project.** It is the self-hostable control plane that orchestrates ephemeral cloud agents and closes the autonomous loop (GitHub → dispatch → PR). The rest of os-eco is the toolchain warren stands on. Each piece works standalone too, but warren is where the ecosystem narrative begins.
 
 ## Ecosystem Overview
 
-Tools are grouped by role: **primitives** store the data agents need, **runtimes** execute a single agent, and **orchestrators** coordinate many agents — with **warren** also closing the autonomous loop (GitHub → dispatch → PR).
+Tools group by role: **warren** is the flagship orchestrator. Underneath sit the **substrate** (sandbox + coordination), the **context primitives** (what agents read & write), and a **runtime** (single-agent execution). **Overstory** is an alternative local-first orchestrator.
 
-### Primitives — context, issues, prompts
-
-| Tool | CLI | npm | Purpose | Sub-repo |
-|------|-----|-----|---------|----------|
-| **Mulch** | `mulch` / `ml` | `@os-eco/mulch-cli` | Structured expertise management | `mulch/` |
-| **Seeds** | `sd` | `@os-eco/seeds-cli` | Git-native issue tracking | `seeds/` |
-| **Canopy** | `cn` | `@os-eco/canopy-cli` | Prompt management & composition | `canopy/` |
-
-### Runtimes — single-agent execution
+### Flagship — agent control plane
 
 | Tool | CLI | npm | Purpose | Sub-repo |
 |------|-----|-----|---------|----------|
-| **Sapling** | `sapling` / `sp` | `@os-eco/sapling-cli` | Headless coding agent with proactive context management | `sapling/` |
-| **Burrow** | `burrow` / `bw` | `@os-eco/burrow-cli` | OS-isolated sandbox runtime for coding agents (bwrap / sandbox-exec) | `burrow/` |
+| **Warren** | `warren` | `@os-eco/warren-cli` | Self-hostable control plane for ephemeral cloud agents; polls GitHub → dispatches runs → opens PRs. Absorbed greenhouse's autonomous-loop role 2026-05. | `warren/` |
 
-### Orchestrators — multi-agent coordination & autonomous loop
+### Substrate — sandbox & coordination
 
 | Tool | CLI | npm | Purpose | Sub-repo |
 |------|-----|-----|---------|----------|
-| **Overstory** | `overstory` / `ov` | `@os-eco/overstory-cli` | Local multi-agent orchestration via tmux + git worktrees | `overstory/` |
-| **Warren** | `warren` | `@os-eco/warren-cli` | Self-hostable control plane for ephemeral cloud agents. Also closes the autonomous loop (polls GitHub, dispatches runs, opens PRs) — formerly greenhouse's role | `warren/` |
+| **Burrow** | `burrow` / `bw` | `@os-eco/burrow-cli` | OS-isolated sandbox runtime (bwrap on Linux, sandbox-exec on macOS). Warren embeds it per run; usable standalone. | `burrow/` |
+| **Plot** | `plot` | `@os-eco/plot-cli` | Typed, queryable coordination object — binds seeds issues, mulch records, prompts, runs, and PRs around a unit of work. The substrate warren uses to keep humans and agents in sync. | `plot/` |
+
+### Context primitives — what agents read & write
+
+| Tool | CLI | npm | Purpose | Sub-repo |
+|------|-----|-----|---------|----------|
+| **Mulch** | `mulch` / `ml` | `@os-eco/mulch-cli` | Structured expertise management. In production across multiple engineering teams as the memory layer for their agent workflows. | `mulch/` |
+| **Seeds** | `sd` | `@os-eco/seeds-cli` | Git-native issue tracking with structured plans for LLM decomposition. Primary planning and tracking surface for agent work. | `seeds/` |
+| **Canopy** | `cn` | `@os-eco/canopy-cli` | Prompt management & composition (inheritance, pinning, schema validation). | `canopy/` |
+
+### Runtime — single-agent execution
+
+| Tool | CLI | npm | Purpose | Sub-repo |
+|------|-----|-----|---------|----------|
+| **Sapling** | `sapling` / `sp` | `@os-eco/sapling-cli` | Headless coding agent with proactive context management. Alternative runtime warren can dispatch alongside Claude Code. | `sapling/` |
+
+### Alternative orchestrator
+
+| Tool | CLI | npm | Purpose | Sub-repo |
+|------|-----|-----|---------|----------|
+| **Overstory** | `overstory` / `ov` | `@os-eco/overstory-cli` | Local-first multi-agent orchestration via tmux + git worktrees. Choose over warren when you want a local-only workflow with no HTTP control plane. | `overstory/` |
 
 ### How they fit together
 
 ```
-warren                           autonomous outer loop (GitHub → dispatch → PR)
-   │                             and cloud control plane
-   ├─► overstory  (local)        local orchestrator: tmux + worktrees
-   │
-   └─► sapling                   runtimes execute a single agent
-       burrow                    (warren embeds burrow for sandboxed runs)
-          │
-          ├─► mulch              primitives feed agents context
-          ├─► seeds              (expertise, work queue, prompts)
-          └─► canopy
+                              Warren  (cloud control plane)
+                                 │
+                  ┌──────────────┼──────────────┐
+                  │              │              │
+              Substrate       Context        Runtime
+              ─────────       ───────        ───────
+              Burrow          Mulch          Sapling
+              Plot            Seeds
+                              Canopy
 ```
 
-- **Warren** closes the autonomous loop AND is the cloud orchestrator — a self-hostable HTTP/UI control plane that polls GitHub for triaged issues, dispatches orchestrator runs, opens PRs, and runs each agent inside a burrow sandbox. Absorbed greenhouse's daemon role in 2026-05
-- **Overstory** is the local orchestrator — tmux + git worktrees, top-down decomposition, SQLite mail
-- **Sapling** is a headless coding agent — an alternative runtime overstory/warren can dispatch to alongside Claude Code
-- **Burrow** is the sandbox primitive — bwrap on Linux, sandbox-exec on macOS; used directly or embedded inside warren
-- **Mulch** is passive — agents call `ml record` / `ml prime` to store and retrieve expertise
-- **Seeds** is the issue tracker — `sd create` / `sd ready` / `sd close` drive the work queue
-- **Canopy** manages prompt templates — `cn emit` renders prompts for agent consumption
+- **Warren** is the flagship — a self-hostable HTTP/UI control plane that polls GitHub for triaged issues, dispatches runs, opens PRs, and runs each agent inside a burrow sandbox. Absorbed greenhouse's daemon role in 2026-05.
+- **Burrow** is the sandbox primitive — bwrap on Linux, sandbox-exec on macOS. Used directly or embedded inside warren.
+- **Plot** is the coordination object — a binder that holds intent, attachments, and event log for a unit of work. Warren bundles it as a feature; it stands alone too.
+- **Mulch** is the expertise layer — agents call `ml record` / `ml prime` to store and retrieve learnings across sessions.
+- **Seeds** is the issue tracker — `sd create` / `sd ready` / `sd close` drive the work queue.
+- **Canopy** is the prompt library — `cn emit` renders prompts for agent consumption.
+- **Sapling** is an alternative coding agent runtime.
+- **Overstory** is the local-first orchestrator — tmux + git worktrees, top-down decomposition, SQLite mail.
 
 Each sub-repo has its own `CLAUDE.md` with tool-specific conventions, architecture, and commands.
 
@@ -66,13 +79,14 @@ The root `.mulch/`, `.seeds/`, `.canopy/`, and `.overstory/` directories are for
 All tools use Bun. Run from the respective sub-repo:
 
 ```bash
+cd warren      && bun test && bun run lint && bun run typecheck
+cd burrow      && bun test && bun run lint && bun run typecheck
+cd plot        && bun test && bun run lint && bun run typecheck
 cd mulch       && bun test && bun run lint && bun run typecheck
 cd seeds       && bun test && bun run lint && bun run typecheck
 cd canopy      && bun test && bun run lint && bun run typecheck
 cd sapling     && bun test && bun run lint && bun run typecheck
-cd burrow      && bun test && bun run lint && bun run typecheck
 cd overstory   && bun test && bun run lint && bun run typecheck
-cd warren      && bun test && bun run lint && bun run typecheck
 ```
 
 ## Retired tools

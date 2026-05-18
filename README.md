@@ -1,62 +1,77 @@
 # os-eco
 
+[![Warren CI](https://github.com/jayminwest/warren/actions/workflows/ci.yml/badge.svg)](https://github.com/jayminwest/warren/actions/workflows/ci.yml)
+[![Burrow CI](https://github.com/jayminwest/burrow/actions/workflows/ci.yml/badge.svg)](https://github.com/jayminwest/burrow/actions/workflows/ci.yml)
+[![Plot CI](https://github.com/jayminwest/plot/actions/workflows/ci.yml/badge.svg)](https://github.com/jayminwest/plot/actions/workflows/ci.yml)
 [![Mulch CI](https://github.com/jayminwest/mulch/actions/workflows/ci.yml/badge.svg)](https://github.com/jayminwest/mulch/actions/workflows/ci.yml)
 [![Seeds CI](https://github.com/jayminwest/seeds/actions/workflows/ci.yml/badge.svg)](https://github.com/jayminwest/seeds/actions/workflows/ci.yml)
 [![Canopy CI](https://github.com/jayminwest/canopy/actions/workflows/ci.yml/badge.svg)](https://github.com/jayminwest/canopy/actions/workflows/ci.yml)
 [![Sapling CI](https://github.com/jayminwest/sapling/actions/workflows/ci.yml/badge.svg)](https://github.com/jayminwest/sapling/actions/workflows/ci.yml)
-[![Burrow CI](https://github.com/jayminwest/burrow/actions/workflows/ci.yml/badge.svg)](https://github.com/jayminwest/burrow/actions/workflows/ci.yml)
 [![Overstory CI](https://github.com/jayminwest/overstory/actions/workflows/ci.yml/badge.svg)](https://github.com/jayminwest/overstory/actions/workflows/ci.yml)
-[![Warren CI](https://github.com/jayminwest/warren/actions/workflows/ci.yml/badge.svg)](https://github.com/jayminwest/warren/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-An integrated ecosystem of CLI tools for AI agent workflows. Each tool handles one concern — expertise, issues, prompts, runtime, sandbox, orchestration, or the autonomous loop — and they compose together so multi-agent teams can operate on real codebases.
+A self-hostable control plane for AI coding agents — and the integrated toolchain it sits on top of.
 
 <p align="center">
   <img src="branding/logo.png" alt="os-eco" width="444" />
 </p>
 
-## Tools
+## Warren — the agent control plane
 
-Grouped by role: **primitives** hold the data agents need, **runtimes** execute a single agent, **orchestrators** coordinate many, and a **daemon** closes the autonomous loop.
+[**Warren**](https://github.com/jayminwest/warren) is the headline project. Point it at a GitHub repo, pick an agent, write a prompt; warren spawns the agent inside a sandbox, streams events back to a live UI, lets you steer mid-run, and pushes the workspace branch when it's done.
 
-### Primitives — context, issues, prompts
+- **Self-hostable.** One container, one volume, one HTTP API, one UI. Run it on a home server, a Fly app, or a cluster.
+- **Sandboxed per run.** Every run gets a fresh isolated workspace via [burrow](#substrate); the host is unreachable.
+- **Closes the autonomous loop.** Polls GitHub for triaged issues, dispatches runs, opens PRs. No external daemon.
+- **Standalone first.** Ships with the `claude-code` and `sapling` agents inline — fresh-install only needs a GitHub URL and an Anthropic key.
 
-| Tool | CLI | npm | What it does |
-|------|-----|-----|-------------|
-| [**Mulch**](https://github.com/jayminwest/mulch) | `mulch` / `ml` | [![npm](https://img.shields.io/npm/v/@os-eco/mulch-cli)](https://www.npmjs.com/package/@os-eco/mulch-cli) | Structured expertise management — record conventions, patterns, and decisions as you work, retrieve them at the start of every session |
-| [**Seeds**](https://github.com/jayminwest/seeds) | `sd` | [![npm](https://img.shields.io/npm/v/@os-eco/seeds-cli)](https://www.npmjs.com/package/@os-eco/seeds-cli) | Git-native issue tracking — JSONL storage, dependency graphs, templates, zero external dependencies |
-| [**Canopy**](https://github.com/jayminwest/canopy) | `cn` | [![npm](https://img.shields.io/npm/v/@os-eco/canopy-cli)](https://www.npmjs.com/package/@os-eco/canopy-cli) | Prompt management — version-controlled prompt composition with inheritance, pinning, and schema validation |
-
-### Runtimes — single-agent execution
-
-| Tool | CLI | npm | What it does |
-|------|-----|-----|-------------|
-| [**Sapling**](https://github.com/jayminwest/sapling) | `sp` | [![npm](https://img.shields.io/npm/v/@os-eco/sapling-cli)](https://www.npmjs.com/package/@os-eco/sapling-cli) | Headless coding agent — proactive context management between every LLM call, pluggable backends |
-| [**Burrow**](https://github.com/jayminwest/burrow) | `burrow` / `bw` | [![npm](https://img.shields.io/npm/v/@os-eco/burrow-cli)](https://www.npmjs.com/package/@os-eco/burrow-cli) | OS-isolated sandbox runtime — `bwrap` on Linux, `sandbox-exec` on macOS; no Docker, no daemon |
-
-### Orchestrators — multi-agent coordination & autonomous loop
-
-| Tool | CLI | npm | What it does |
-|------|-----|-----|-------------|
-| [**Overstory**](https://github.com/jayminwest/overstory) | `overstory` / `ov` | [![npm](https://img.shields.io/npm/v/@os-eco/overstory-cli)](https://www.npmjs.com/package/@os-eco/overstory-cli) | Local multi-agent orchestration — spawns agents in git worktrees via tmux, coordinates through SQLite mail, merges with conflict resolution |
-| [**Warren**](https://github.com/jayminwest/warren) | `warren` | [![npm](https://img.shields.io/npm/v/@os-eco/warren-cli)](https://www.npmjs.com/package/@os-eco/warren-cli) | Self-hostable control plane for ephemeral cloud agents — one container, one volume, one HTTP API, one UI; embeds burrow per run. Also closes the autonomous loop (GitHub → dispatch → PR), the role formerly held by [greenhouse](#retired-tools) |
-
-## How they fit together
-
-```
-warren                           autonomous outer loop (GitHub → dispatch → PR)
-   │                             and cloud control plane
-   ├─► overstory  (local)        local orchestrator: tmux + worktrees
-   │
-   └─► sapling                   runtimes execute a single agent
-       burrow                    (warren embeds burrow for sandboxed runs)
-          │
-          ├─► mulch              primitives feed agents context
-          ├─► seeds              (expertise, work queue, prompts)
-          └─► canopy
+```bash
+git clone https://github.com/jayminwest/warren && cd warren
+cp .env.example .env
+docker compose up -d
+open http://localhost:8080
 ```
 
-Warren closes the manual loop and orchestrates cloud runs; overstory handles local multi-agent decomposition; sandbox primitives keep execution safe; data primitives feed every agent the context it needs. All tools share the same design principles:
+The rest of os-eco is the toolchain warren stands on. Each piece works standalone too, but together they form one coherent agent operating system.
+
+## The toolchain
+
+```
+                              Warren  (cloud control plane)
+                                 │
+                  ┌──────────────┼──────────────┐
+                  │              │              │
+              Substrate       Context        Runtime
+              ─────────       ───────        ───────
+              Burrow          Mulch          Sapling
+              Plot            Seeds
+                              Canopy
+```
+
+### Substrate — sandbox & coordination
+
+| Tool | CLI | npm | What it does |
+|------|-----|-----|--------------|
+| [**Burrow**](https://github.com/jayminwest/burrow) | `burrow` / `bw` | [![npm](https://img.shields.io/npm/v/@os-eco/burrow-cli)](https://www.npmjs.com/package/@os-eco/burrow-cli) | OS-isolated sandbox runtime — `bwrap` on Linux, `sandbox-exec` on macOS. No Docker, no daemon. Warren embeds it per run; usable standalone for any coding agent. |
+| [**Plot**](https://github.com/jayminwest/plot) | `plot` | [![npm](https://img.shields.io/npm/v/@os-eco/plot-cli)](https://www.npmjs.com/package/@os-eco/plot-cli) | Typed, queryable coordination object for multi-agent work — binds together seeds issues, mulch records, prompts, runs, and PRs around a single unit of work. The substrate warren uses to keep humans and agents on the same page. |
+
+### Context primitives — what agents read & write
+
+| Tool | CLI | npm | What it does |
+|------|-----|-----|--------------|
+| [**Mulch**](https://github.com/jayminwest/mulch) | `mulch` / `ml` | [![npm](https://img.shields.io/npm/v/@os-eco/mulch-cli)](https://www.npmjs.com/package/@os-eco/mulch-cli) | Structured expertise management — record conventions, patterns, and decisions as you work; retrieve them at the start of every session. In production across multiple engineering teams as the memory layer for their Claude Code / agent workflows. |
+| [**Seeds**](https://github.com/jayminwest/seeds) | `sd` | [![npm](https://img.shields.io/npm/v/@os-eco/seeds-cli)](https://www.npmjs.com/package/@os-eco/seeds-cli) | Git-native issue tracking — JSONL storage, dependency graphs, structured plans for LLM decomposition, zero external dependencies. The primary planning and tracking surface for agent work. |
+| [**Canopy**](https://github.com/jayminwest/canopy) | `cn` | [![npm](https://img.shields.io/npm/v/@os-eco/canopy-cli)](https://www.npmjs.com/package/@os-eco/canopy-cli) | Prompt management — version-controlled prompt composition with inheritance, pinning, and schema validation. |
+
+### Runtime — single-agent execution
+
+| Tool | CLI | npm | What it does |
+|------|-----|-----|--------------|
+| [**Sapling**](https://github.com/jayminwest/sapling) | `sp` | [![npm](https://img.shields.io/npm/v/@os-eco/sapling-cli)](https://www.npmjs.com/package/@os-eco/sapling-cli) | Headless coding agent with proactive context management between every LLM call. An alternative runtime warren can dispatch alongside Claude Code. |
+
+## Shared design principles
+
+Every tool in os-eco shares the same shape:
 
 - **Git-native storage** — JSONL and YAML files that live in your repo, merge cleanly, and need no external database
 - **Zero runtime dependencies** — each tool is a single Bun binary with no daemon or server
@@ -66,35 +81,37 @@ Warren closes the manual loop and orchestrates cloud runs; overstory handles loc
 
 ## Quick start
 
-Requires [Bun](https://bun.sh/) >= 1.0.
+The headline path is warren. Requires Docker.
 
 ```bash
-# Install the data + runtime layer
-bun install -g \
-  @os-eco/mulch-cli \
-  @os-eco/seeds-cli \
-  @os-eco/canopy-cli \
-  @os-eco/sapling-cli \
-  @os-eco/burrow-cli
-
-# Add orchestration as you need it
-bun install -g @os-eco/overstory-cli       # local, tmux + worktrees
-bun install -g @os-eco/warren-cli          # self-hostable cloud control plane + autonomous loop
-
-# Initialize in your project
-cd your-project
-ml init && sd init && cn init && ov init
-
-# Verify
-ml --version && sd --version && cn --version && sp version && ov --version
+git clone https://github.com/jayminwest/warren && cd warren
+cp .env.example .env       # add ANTHROPIC_API_KEY + GITHUB_TOKEN
+docker compose up -d
+open http://localhost:8080
 ```
 
-Each tool works standalone — install just the ones you need:
+Each tool also stands alone. Install only what you need with [Bun](https://bun.sh/) >= 1.0:
 
 ```bash
-bun install -g @os-eco/seeds-cli    # just issue tracking
-bun install -g @os-eco/mulch-cli    # just expertise management
-bun install -g @os-eco/burrow-cli   # just the sandbox primitive
+# Context primitives
+bun install -g @os-eco/mulch-cli      # expertise
+bun install -g @os-eco/seeds-cli      # issues
+bun install -g @os-eco/canopy-cli     # prompts
+
+# Substrate
+bun install -g @os-eco/burrow-cli     # sandbox
+bun install -g @os-eco/plot-cli       # coordination
+
+# Runtime
+bun install -g @os-eco/sapling-cli    # headless agent
+```
+
+Initialize the data layer in a project:
+
+```bash
+cd your-project
+ml init && sd init && cn init
+ml --version && sd --version && cn --version
 ```
 
 ## Example workflow
@@ -103,22 +120,29 @@ bun install -g @os-eco/burrow-cli   # just the sandbox primitive
 # An agent starts a session
 ml prime                              # load project expertise into context
 sd ready                              # find unblocked issues to work on
-sd update seed-a1b2 --status in_progress
+sd update sd-a1b2 --status in_progress
 
 # Agent does work, then wraps up
 ml record testing --type convention \
   --description "Always mock fs in unit tests"
-sd close seed-a1b2
+sd close sd-a1b2
 
-# Local multi-agent orchestration
-ov sling seed-c3d4 --strategy worktree   # spawn an agent for an issue
-ov status                                 # monitor running agents
-ov merge builder-01                       # merge completed work back
+# Multi-agent coordination via plot
+plot init "Add OAuth to billing portal"
+plot attach plot-abc1 seeds_issue:sd-a1b2 --role tracks
 
-# Cloud control plane — one container, one volume
-git clone https://github.com/jayminwest/warren && cd warren
-cp .env.example .env && docker compose up -d
-open http://localhost:8080
+# Cloud orchestration via warren
+# (see warren/README.md for the full UI + API surface)
+```
+
+## Alternative orchestrator
+
+[**Overstory**](https://github.com/jayminwest/overstory) (`overstory` / `ov`, `@os-eco/overstory-cli`) is a local-first orchestrator: it spawns agents in tmux + git worktrees, coordinates through a SQLite mail layer, and merges with conflict resolution. Choose it over warren when you want a local-only workflow with no HTTP control plane.
+
+```bash
+bun install -g @os-eco/overstory-cli
+cd your-project && ov init
+ov sling sd-c3d4 --strategy worktree     # spawn an agent for an issue
 ```
 
 ## Repo structure
@@ -127,13 +151,14 @@ Each tool lives in its own sub-repo with independent git history, CI, and npm ve
 
 ```
 os-eco/
-  mulch/           # sub-repo: @os-eco/mulch-cli
-  seeds/           # sub-repo: @os-eco/seeds-cli
-  canopy/          # sub-repo: @os-eco/canopy-cli
-  sapling/         # sub-repo: @os-eco/sapling-cli
-  burrow/          # sub-repo: @os-eco/burrow-cli
-  overstory/       # sub-repo: @os-eco/overstory-cli
-  warren/          # sub-repo: @os-eco/warren-cli
+  warren/          # sub-repo: @os-eco/warren-cli         — headline control plane
+  burrow/          # sub-repo: @os-eco/burrow-cli         — sandbox primitive
+  plot/            # sub-repo: @os-eco/plot-cli           — coordination object
+  mulch/           # sub-repo: @os-eco/mulch-cli          — expertise
+  seeds/           # sub-repo: @os-eco/seeds-cli          — issues
+  canopy/          # sub-repo: @os-eco/canopy-cli         — prompts
+  sapling/         # sub-repo: @os-eco/sapling-cli        — headless agent
+  overstory/       # sub-repo: @os-eco/overstory-cli      — local orchestrator
   branding/        # shared visual spec, CLI standards, checklists
   .mulch/          # ecosystem-level expertise
   .seeds/          # ecosystem-level issues
@@ -145,17 +170,14 @@ os-eco/
 
 ```bash
 # Run tests, lint, and typecheck for any tool
+cd warren     && bun test && bun run lint && bun run typecheck
+cd burrow     && bun test && bun run lint && bun run typecheck
+cd plot       && bun test && bun run lint && bun run typecheck
 cd mulch      && bun test && bun run lint && bun run typecheck
 cd seeds      && bun test && bun run lint && bun run typecheck
 cd canopy     && bun test && bun run lint && bun run typecheck
 cd sapling    && bun test && bun run lint && bun run typecheck
-cd burrow     && bun test && bun run lint && bun run typecheck
 cd overstory  && bun test && bun run lint && bun run typecheck
-cd warren     && bun test && bun run lint && bun run typecheck
-
-# Check ecosystem health
-ov doctor          # checks all tools are installed and healthy
-ov ecosystem       # dashboard with versions, health, and status
 ```
 
 ## Retired tools

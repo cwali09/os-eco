@@ -1,21 +1,24 @@
 # os-eco Branding & Standards
 
 Canonical reference for visual identity, CLI conventions, and consistency standards
-across the os-eco tooling ecosystem (mulch, seeds, canopy, sapling, burrow, overstory, warren).
+across the os-eco tooling ecosystem (warren, burrow, plot, mulch, seeds, canopy, sapling, overstory).
 
-Last verified: 2026-03-05 (full audit with per-file evidence). Burrow and Warren added 2026-05-13, audit pending. Greenhouse archived 2026-05 — historical rows preserved with `[archived]` marker; gaps are no longer tracked.
+Last verified: 2026-03-05 (full audit with per-file evidence). Burrow and Warren added 2026-05-13, audit pending. Plot added 2026-05-17, audit pending. Greenhouse archived 2026-05 — historical rows preserved with `[archived]` marker; gaps are no longer tracked.
 
 ## Status
 
+Rows are ordered by ecosystem tier: flagship → substrate → context primitives → runtime → alternative orchestrator.
+
 | Tool | Version | Branding | CLI Standards | Remaining |
 |------|---------|----------|---------------|-----------|
+| Warren | 0.3.0 | pending | pending | Full audit against visual-spec.md + cli-standards.md |
+| Burrow | 0.3.0 | pending | pending | Full audit against visual-spec.md + cli-standards.md |
+| Plot | 0.3.0 | pending | pending | Full audit against visual-spec.md + cli-standards.md |
 | Mulch | 0.10.0 | complete | complete | — |
 | Seeds | 0.4.4 | complete | complete | — |
 | Canopy | 0.2.4 | complete | complete | — |
 | Sapling | 0.3.2 | complete | complete | — |
-| Burrow | 0.3.0 | pending | pending | Full audit against visual-spec.md + cli-standards.md |
 | Overstory | 0.11.0 | complete | complete | — |
-| Warren | 0.3.0 | pending | pending | Full audit against visual-spec.md + cli-standards.md |
 | ~~Greenhouse~~ | 0.1.2 | partial | partial | **Archived 2026-05 — superseded by warren. Historical state preserved; no further work tracked.** |
 
 ## Quick Start
