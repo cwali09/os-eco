@@ -12,6 +12,28 @@ copy artifacts out of it and adapt budgets/thresholds/tracker prefixes to
 their target repo's current state. There is no runtime dependency on this
 directory from any sub-repo.
 
+## Subdirectory Map
+
+Every artifact in the toolkit lives under one of seven subdirectories. Use
+this table as the index: each row names a subdirectory, the purpose it
+serves, and the rubric criteria its contents close. The §(d) checklist
+later in this README walks the same subdirectories in copy order.
+
+| Subdirectory | Purpose | Closes (rubric criteria) |
+|--------------|---------|--------------------------|
+| [`scripts/`](./scripts/) | TypeScript ratchets (file size, debt markers, coverage), the AGENTS.md validator, the CI step-summary reporters, and the `hooks/pre-commit` shell hook installed via `prepare`. Every script has a co-located `*.test.ts` suite. | `large_file_detection`, `tech_debt_tracking`, `test_coverage_thresholds`, `agents_md_validation`, `test_performance_tracking`, `code_quality_metrics`, `pre_commit_hooks` |
+| [`budgets/`](./budgets/) | JSON budget templates consumed by the ratchet scripts. Each is rebased to the sub-repo's current worst state at port time and only loosens via explicit commits. | Same as `scripts/` — budgets are the data half of the ratchets |
+| [`configs/`](./configs/) | Drop-in baselines for the tool surface every Bun + TS sub-repo shares: Biome (lint + filenaming + complexity), knip (deps), jscpd (dup detection), bunfig (test root), strict `tsconfig.base.json`. | `naming_consistency`, `cyclomatic_complexity`, `duplicate_code_detection`, `unused_dependencies_detection` |
+| [`github/`](./github/) | Repository governance artifacts: `dependabot.yml` (with `cooldown`), structured `ISSUE_TEMPLATE/`, `pull_request_template.md`, `labels.yml`, and the `ci.yml` + `sync-labels.yml` workflows. | `dependency_update_automation`, `min_release_age`, `issue_templates`, `pr_templates`, `issue_labeling_system` |
+| [`docs/`](./docs/) | Templates for the three required per-repo docs: `AGENTS.md` (populated per repo), `RUNBOOK.md` (release/triage/rollback), and an architecture mermaid skeleton. | `agents_md`, `runbooks_documented`, `service_flow_documented` |
+| [`env/`](./env/) | `.env.example` template (for repos that read env vars) and the comprehensive `.gitignore` baseline appended to each sub-repo's existing `.gitignore`. | `env_template`, `gitignore_comprehensive` |
+| [`skills/`](./skills/) | Documentation for how to author a real `.factory/skills/<name>/SKILL.md` per repo — frontmatter shape, body conventions, and what counts as "real" vs. placeholder. | `skills` |
+
+The toolkit root also ships [`package-scripts.json`](./package-scripts.json),
+a JSON snippet listing the canonical `check:*`, `test:ci`, and `prepare`
+scripts that get merged into each sub-repo's `package.json` (see §(d)
+Step 8 below).
+
 ## What "Level 5" Means Here
 
 L5 = ≥80% pass rate on the rubric, with the same set of criteria passing as
@@ -64,8 +86,9 @@ templates/l5-toolkit/
 ├── env/
 │   ├── .env.example.template
 │   └── .gitignore.template
-└── skills/
-    └── README.md                   (how to populate .factory/skills/)
+├── skills/
+│   └── README.md                   (how to populate .factory/skills/)
+└── package-scripts.json            <-- canonical package.json scripts snippet
 ```
 
 This Milestone 0 commit creates only the directory **skeleton** plus this
@@ -338,15 +361,20 @@ Copy from `templates/l5-toolkit/env/`:
 
 ### Step 8 — package.json wiring
 
-Merge from the toolkit's `package-scripts.json` snippet:
+Merge from the toolkit's `package-scripts.json` snippet (`cat
+templates/l5-toolkit/package-scripts.json` shows the authoritative
+key set):
 
 - [ ] `check:size`, `check:debt`, `check:dups`, `check:deps`, `check:agents`
 - [ ] `check:coverage`
 - [ ] `check:all` aggregator that chains the above
 - [ ] `test:ci` (emits `junit.xml` + coverage)
-- [ ] `prepare` (sets `core.hooksPath=scripts/hooks`)
+- [ ] `prepare` (sets `core.hooksPath=scripts/hooks`; idempotent on
+      non-git checkouts via `[ -e .git ] && ... || true`)
 - [ ] Add `knip` to `devDependencies`. (`jscpd` runs via `bunx`; no install.)
 - [ ] For plot/mulch/seeds: add `pino` + `pino-pretty` to `devDependencies`.
+- [ ] For burrow (bundled): append `&& bun run check:bundle-size:build`
+      to the `check:all` chain after porting `check-bundle-size.ts`.
 
 ### Step 9 — Verify
 
