@@ -2,7 +2,7 @@ import { describe, expect, test } from "bun:test";
 import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
-import { loadBudgets, scan } from "./check-file-sizes.ts";
+import { countLines, loadBudgets, scan } from "./check-file-sizes.ts";
 
 const TOOLKIT_ROOT = resolve(import.meta.dir, "..");
 
@@ -208,6 +208,106 @@ describe("CLI integration", () => {
 			writeFileTree(root, { "src/huge.ts": `${"line\n".repeat(800)}` });
 			const budgetsPath = join(root, "budget.json");
 			writeBudget(budgetsPath, 500);
+			const proc = Bun.spawn(
+				[
+					"bun",
+					"run",
+					resolve(TOOLKIT_ROOT, "scripts/check-file-sizes.ts"),
+					"--repo-root",
+					root,
+					"--budget",
+					budgetsPath,
+					"--root",
+					"src",
+				],
+				{ stdout: "pipe", stderr: "pipe" },
+			);
+			const exitCode = await proc.exited;
+			expect(exitCode).toBe(1);
+		} finally {
+			cleanup();
+		}
+	});
+});
+
+describe("countLines", () => {
+	test("returns 0 for an empty file", () => {
+		const { root, cleanup } = makeFixture();
+		try {
+			const p = join(root, "empty.ts");
+			writeFileSync(p, "");
+			expect(countLines(p)).toBe(0);
+		} finally {
+			cleanup();
+		}
+	});
+
+	test("counts logical lines for a file ending with a trailing newline", () => {
+		const { root, cleanup } = makeFixture();
+		try {
+			const p = join(root, "trailing.ts");
+			writeFileSync(p, "line1\nline2\n");
+			expect(countLines(p)).toBe(2);
+		} finally {
+			cleanup();
+		}
+	});
+
+	test("counts logical lines for a file lacking a trailing newline (newlineCount + 1)", () => {
+		const { root, cleanup } = makeFixture();
+		try {
+			const p = join(root, "no-trailing.ts");
+			writeFileSync(p, "line1\nline2");
+			expect(countLines(p)).toBe(2);
+		} finally {
+			cleanup();
+		}
+	});
+
+	test("counts a single-line file with no newline as 1", () => {
+		const { root, cleanup } = makeFixture();
+		try {
+			const p = join(root, "single.ts");
+			writeFileSync(p, "just one line");
+			expect(countLines(p)).toBe(1);
+		} finally {
+			cleanup();
+		}
+	});
+});
+
+describe("scan — trailing newline correctness", () => {
+	test("flags a 2-line file without trailing newline against threshold=1", () => {
+		const { root, cleanup } = makeFixture();
+		try {
+			writeFileTree(root, {
+				"src/two-lines-no-trailing.ts": "line1\nline2",
+			});
+			const budgetsPath = join(root, "budget.json");
+			writeBudget(budgetsPath, 1);
+			const result = scan({
+				repoRoot: root,
+				budgetsPath,
+				scanRoots: ["src"],
+				excludePathPrefixes: [],
+			});
+			expect(result.failures.length).toBe(1);
+			expect(result.failures[0]?.path).toBe("src/two-lines-no-trailing.ts");
+			expect(result.failures[0]?.lines).toBe(2);
+			expect(result.failures[0]?.budget).toBe(1);
+		} finally {
+			cleanup();
+		}
+	});
+});
+
+describe("CLI integration — trailing newline bypass", () => {
+	test("CLI exits 1 on a 2-line no-trailing-newline file against threshold=1", async () => {
+		const { root, cleanup } = makeFixture();
+		try {
+			writeFileTree(root, { "src/bypass.ts": "line1\nline2" });
+			const budgetsPath = join(root, "budget.json");
+			writeBudget(budgetsPath, 1);
 			const proc = Bun.spawn(
 				[
 					"bun",

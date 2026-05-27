@@ -91,13 +91,14 @@ function* walk(dir: string): Generator<string> {
 	}
 }
 
-function countLines(filePath: string): number {
+export function countLines(filePath: string): number {
 	const buf = readFileSync(filePath);
 	if (buf.length === 0) return 0;
 	let count = 0;
 	for (let i = 0; i < buf.length; i++) {
 		if (buf[i] === 0x0a) count++;
 	}
+	if (buf[buf.length - 1] !== 0x0a) count++;
 	return count;
 }
 
