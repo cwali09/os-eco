@@ -1,0 +1,15 @@
+# Bun runtime configuration baseline for L5 toolkit consumers.
+# See https://bun.sh/docs/runtime/bunfig for available options.
+#
+# Test discovery is rooted at src/ by default — most os-eco sub-repos colocate
+# *.test.ts next to the file under test inside src/. Repos whose tests live
+# under a sibling directory (e.g. mulch's test/) should override `root` here:
+#
+#   [test]
+#   root = "test"
+#
+# To run multiple test roots, drop the [test] block entirely and rely on bun's
+# default recursive discovery, or pass paths explicitly to `bun test`.
+
+[test]
+root = "src"
