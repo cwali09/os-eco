@@ -5,7 +5,7 @@ description: Detect configuration and convention drift across ecosystem repos
 
 ## description
 
-Compare tooling configuration, project structure, and conventions across all seven active ecosystem repos (mulch, seeds, canopy, overstory, sapling, burrow, warren). Identify drift and recommend alignment actions. (Greenhouse was the original sixth tool here — archived 2026-05, superseded by warren; do not include in scans.)
+Compare tooling configuration, project structure, and conventions across all seven active ecosystem repos (warren, burrow, plot, mulch, seeds, canopy, sapling). Identify drift and recommend alignment actions. (Greenhouse and overstory were also tools here — both archived 2026-05, superseded by warren; do not include in scans.)
 
 **Argument:** `$ARGUMENTS` — optional: a specific area to audit (e.g., `biome`, `tsconfig`, `commands`, `infrastructure`). If empty, audit everything.
 
@@ -24,7 +24,7 @@ Build a comparison matrix for each config file.
 ### Agent B: Project infrastructure
 For each sub-repo, check:
 - `.claude/commands/` — which slash commands exist? Are the standard four present (release, prioritize, issue-reviews, pr-reviews)?
-- `CLAUDE.md` — does it have the mulch/seeds/canopy/overstory onboarding sections? Is the format consistent?
+- `CLAUDE.md` — does it have the mulch/seeds/canopy onboarding sections? Is the format consistent?
 - `.gitignore` — are patterns consistent across repos?
 - `.gitattributes` — is the JSONL merge=union strategy set?
 - `.github/workflows/` — are CI workflows present and consistent?
@@ -46,21 +46,21 @@ After all agents return, produce a drift report:
 
 For each config area, show which repos align and which diverge:
 
-| Setting | mulch | seeds | canopy | overstory | sapling | burrow | warren | Consensus |
-|---------|-------|-------|--------|-----------|---------|------------|-----------|
+| Setting | warren | burrow | plot | mulch | seeds | canopy | sapling | Consensus |
+|---------|--------|--------|------|-------|-------|--------|---------|-----------|
 
 Mark cells with `✓` (matches consensus), `✗` (diverges), or `—` (not applicable).
 
 ### Infrastructure Completeness
 
-| Item | mulch | seeds | canopy | overstory | sapling | burrow | warren |
-|------|-------|-------|--------|-----------|---------|------------|
-| Standard commands (4) | | | | | | |
-| CLAUDE.md onboarding | | | | | | |
-| CI workflow | | | | | | |
-| .gitattributes JSONL | | | | | | |
-| CONTRIBUTING.md | | | | | | |
-| SECURITY.md | | | | | | |
+| Item | warren | burrow | plot | mulch | seeds | canopy | sapling |
+|------|--------|--------|------|-------|-------|--------|---------|
+| Standard commands (4) | | | | | | | |
+| CLAUDE.md onboarding | | | | | | | |
+| CI workflow | | | | | | | |
+| .gitattributes JSONL | | | | | | | |
+| CONTRIBUTING.md | | | | | | | |
+| SECURITY.md | | | | | | | |
 
 ### Convention Alignment
 

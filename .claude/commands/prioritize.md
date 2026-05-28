@@ -7,7 +7,7 @@ description: Prioritize open issues across GitHub and Seeds for the next swarm r
 
 Analyze all open issues across GitHub Issues and Seeds (both per-repo and ecosystem-level), cross-reference with codebase health, and recommend the top ~5 issues for the next swarm to tackle.
 
-**Argument:** `$ARGUMENTS` — optional: a repo name to focus on (e.g., `overstory`, `seeds`, `canopy`, `mulch`). If empty, analyze the full ecosystem.
+**Argument:** `$ARGUMENTS` — optional: a repo name to focus on (e.g., `warren`, `seeds`, `canopy`, `mulch`). If empty, analyze the full ecosystem.
 
 ## gather-issues
 
@@ -19,7 +19,7 @@ Use the Task tool to spawn **three parallel agents**:
 - Note any issues with community engagement (comments, thumbs-up, external authors)
 
 ### Agent B: Seeds Issues
-- For each sub-repo (`overstory/`, `seeds/`, `canopy/`, `mulch/`) and the root (`./`):
+- For each sub-repo (`warren/`, `burrow/`, `plot/`, `mulch/`, `seeds/`, `canopy/`, `sapling/`) and the root (`./`):
   - Run `sd list` and `sd ready` (if seeds is initialized in that directory)
   - For each open issue, run `sd show <id>` to get full details
   - Capture: id, title, type, priority, status, description, dependencies/blockers

@@ -5,13 +5,13 @@ description: "Cross-repo health dashboard: tests, lint, types, and code quality 
 
 ## description
 
-Scan all seven active ecosystem sub-repos (mulch, seeds, canopy, overstory, sapling, burrow, warren) for build health, test coverage gaps, and code quality signals. Report a single consolidated dashboard. (Greenhouse was the eighth tool here — archived 2026-05, superseded by warren; do not include in scans.)
+Scan all seven active ecosystem sub-repos (warren, burrow, plot, mulch, seeds, canopy, sapling) for build health, test coverage gaps, and code quality signals. Report a single consolidated dashboard. (Greenhouse and overstory were also tools here — both archived 2026-05, superseded by warren; do not include in scans.)
 
-**Argument:** `$ARGUMENTS` — optional: a repo name to focus on (e.g., `overstory`, `sapling`). If empty, scan the full ecosystem.
+**Argument:** `$ARGUMENTS` — optional: a repo name to focus on (e.g., `warren`, `sapling`). If empty, scan the full ecosystem.
 
 ## scan
 
-Use the Agent tool to spawn **seven parallel Explore agents**, one per active sub-repo (mulch, seeds, canopy, overstory, sapling, burrow, warren). Each agent runs from within that sub-repo directory and reports:
+Use the Agent tool to spawn **seven parallel Explore agents**, one per active sub-repo (warren, burrow, plot, mulch, seeds, canopy, sapling). Each agent runs from within that sub-repo directory and reports:
 
 ### Per-repo checks
 

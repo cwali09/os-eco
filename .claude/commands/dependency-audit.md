@@ -5,7 +5,7 @@ description: Audit shared dependencies for version mismatches and outdated packa
 
 ## description
 
-Compare npm dependencies across all seven active ecosystem repos (mulch, seeds, canopy, overstory, sapling, burrow, warren). Identify version mismatches, outdated packages, and opportunities for alignment. (Greenhouse was the original sixth tool here — archived 2026-05, superseded by warren; do not include in scans.)
+Compare npm dependencies across all seven active ecosystem repos (warren, burrow, plot, mulch, seeds, canopy, sapling). Identify version mismatches, outdated packages, and opportunities for alignment. (Greenhouse and overstory were also tools here — both archived 2026-05, superseded by warren; do not include in scans.)
 
 **Argument:** `$ARGUMENTS` — optional: a package name to focus on (e.g., `chalk`, `commander`). If empty, audit all shared dependencies.
 
@@ -14,7 +14,7 @@ Compare npm dependencies across all seven active ecosystem repos (mulch, seeds, 
 Use the Agent tool to spawn **two parallel agents**:
 
 ### Agent A: Dependency extraction
-For each active sub-repo (mulch, seeds, canopy, overstory, sapling, burrow, warren):
+For each active sub-repo (warren, burrow, plot, mulch, seeds, canopy, sapling):
 - Read `package.json` and extract `dependencies` and `devDependencies`
 - Read `bun.lock` (or `bun.lockb`) if present for pinned versions
 - Capture: package name, declared version range, resolved version (from lock), dep type (prod/dev)
@@ -23,7 +23,7 @@ Build a unified dependency list across all repos.
 
 ### Agent B: Ecosystem dependency check
 - Read the root `package.json` if one exists
-- Check if any sub-repos import from each other (e.g., does warren depend on overstory?)
+- Check if any sub-repos import from each other (e.g., does warren depend on burrow?)
 - Check for `@os-eco/*` packages in any dependencies
 - Identify any workspace or monorepo configuration
 
@@ -33,8 +33,8 @@ After both agents return, produce:
 
 ### Shared Dependency Matrix
 
-| Package | mulch | seeds | canopy | overstory | sapling | burrow | warren | Aligned? |
-|---------|-------|-------|--------|-----------|---------|------------|----------|
+| Package | warren | burrow | plot | mulch | seeds | canopy | sapling | Aligned? |
+|---------|--------|--------|------|-------|-------|--------|---------|----------|
 
 Show the version used in each repo. Mark `Aligned?` as `✓` if all repos use the same version, `✗` if versions differ.
 

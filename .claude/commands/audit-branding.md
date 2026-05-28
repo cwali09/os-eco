@@ -4,17 +4,17 @@ name: audit-branding
 
 ## description
 
-Scout all four sub-repos to verify branding implementation, then update branding/ docs to match reality.
+Scout all three sub-repos to verify branding implementation, then update branding/ docs to match reality.
 
-**Argument:** `$ARGUMENTS` — optional: a single tool name to audit [e.g., overstory]. If empty, audit all four.
+**Argument:** `$ARGUMENTS` — optional: a single tool name to audit [e.g., canopy]. If empty, audit all three.
 
 ## scout
 
-Use the Task tool to spawn **four parallel Explore agents** [or one, if a specific tool was requested]. Each agent examines one sub-repo and reports ground truth.
+Use the Task tool to spawn **three parallel Explore agents** [or one, if a specific tool was requested]. Each agent examines one sub-repo and reports ground truth.
 
 ### Per-tool agent instructions
 
-For the tool at `<tool>/` [mulch, seeds, canopy, or overstory], check every item below. Report what IS implemented [with file path + line evidence] and what is NOT.
+For the tool at `<tool>/` [mulch, seeds, or canopy], check every item below. Report what IS implemented [with file path + line evidence] and what is NOT.
 
 #### Package metadata
 - package.json: name, version, description, bin entries, keywords
@@ -76,7 +76,7 @@ Edit the branding files to match reality:
 
 ### `branding/roadmap.md`
 - Mark completed items [e.g., shell completions, timing]
-- Update version numbers in ov ecosystem example
+- Update version numbers in the ecosystem example
 - Add status notes to items that are partially done
 
 ### `branding/README.md`
