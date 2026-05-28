@@ -9,6 +9,24 @@ sapling/
 seeds/
 warren/
 
-# Generated
+# Local logs / scratch
 .run-plan-logs/
+
+# Secrets / env
+.env
+.env.*
+!.env.example
+
+# Editor / IDE
+.idea/
+.vscode/
+
+# OS junk
 .DS_Store
+
+# Build / test artifacts (defensive — no build at root today)
+node_modules/
+dist/
+coverage/
+test-results/
+*.log
