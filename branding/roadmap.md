@@ -34,7 +34,7 @@ Each tool copies/bundles what it needs at build time, preserving the zero-runtim
 Alternatively, just import directly since Bun resolves workspace deps at runtime anyway.
 
 ### When to build this
-The original six tools all use commander + chalk; burrow and warren joined post-V1 and their stacks haven't been audited against this spec yet. Patterns across the core six have largely converged:
+The audited tools (mulch, seeds, canopy, sapling) all use commander + chalk; burrow and warren joined post-V1 and their stacks haven't been audited against this spec yet. Patterns across these tools have largely converged:
 - Common output helpers: `printSuccess()`, `printError()`, `printWarning()`
 - Shared palette: brand color + accent (amber) + muted (stone gray)
 - Status icon set D: `- > x !`
@@ -46,7 +46,7 @@ The original six tools all use commander + chalk; burrow and warren joined post-
 
 ## CI Parity
 
-All eight repos should use an identical GitHub Actions workflow structure. Seeds already has CI + auto-publish to npm.
+All active repos should use an identical GitHub Actions workflow structure. Seeds already has CI + auto-publish to npm.
 
 ```yaml
 # .github/workflows/ci.yml
@@ -96,7 +96,7 @@ $ sd list --timing
 - Output goes to stderr (doesn't interfere with `--json` piping)
 - Format: `Done in <N>ms` in muted text
 
-**Status:** Complete across the original six tools. Burrow + warren audit pending.
+**Status:** Complete across the audited tools (mulch, seeds, canopy, sapling). Burrow + warren audit pending.
 
 ---
 
@@ -105,11 +105,11 @@ $ sd list --timing
 Document and test that tools compose via `--json` stdout:
 
 ```bash
-# Find unblocked work and sling it to an agent
-sd ready --json | ov sling --stdin
+# Find unblocked work and dispatch it to an agent
+sd ready --json | warren dispatch --stdin
 
-# Check all tool health in one shot
-ov doctor --json | jq '.checks[] | select(.status == "fail")'
+# Check tool health in one shot
+mulch doctor --json | jq '.checks[] | select(.status == "fail")'
 ```
 
 This requires:
@@ -119,21 +119,19 @@ This requires:
 
 ---
 
-## Shell Completions — Done (5/8)
+## Shell Completions — Done (4 tools)
 
-Five tools (mulch, seeds, canopy, overstory, sapling) now ship completions for bash, zsh, and fish via a `completions <shell>` subcommand. Burrow + warren joined post-V1 and their support is unaudited. (Greenhouse was the sixth tool here; archived 2026-05.)
+Four tools (mulch, seeds, canopy, sapling) ship completions for bash, zsh, and fish via a `completions <shell>` subcommand. Burrow + warren joined post-V1 and their support is unaudited.
 
 ```bash
 # Generate and install
 sd completions zsh > ~/.zfunc/_sd
 cn completions bash > /etc/bash_completion.d/cn
 mulch completions fish > ~/.config/fish/completions/mulch.fish
-ov completions zsh > ~/.zfunc/_ov
 sp completions fish > ~/.config/fish/completions/sp.fish
-# grhs completions zsh — not yet implemented
 ```
 
-**Status:** Complete for mulch, seeds, canopy, overstory, sapling. Burrow + warren audit pending. (Greenhouse archived 2026-05.)
+**Status:** Complete for mulch, seeds, canopy, sapling. Burrow + warren audit pending.
 
 ---
 
@@ -153,13 +151,12 @@ Generated from help text. Unusual for TS/Bun tools — polished touch.
 
 ---
 
-## ov init Bootstraps Everything
+## One-Command Bootstrap
 
-`ov init` becomes the one-command project setup:
+A single bootstrap command becomes the one-command project setup:
 
 ```bash
-$ ov init
-✓ Initialized .overstory/
+$ <bootstrap> init
 ✓ Initialized .mulch/
 ✓ Initialized .seeds/
 ✓ Initialized .canopy/
@@ -173,9 +170,9 @@ Flags:
 
 ---
 
-## ov ecosystem Command — Done
+## Ecosystem Dashboard Command
 
-Dashboard showing the full ecosystem status (implemented in v0.7.4):
+Dashboard showing the full ecosystem status:
 
 ```
 os-eco ecosystem status
@@ -187,9 +184,7 @@ seeds     sd    0.4.4    - latest   ✓ 10/10 checks
 canopy    cn    0.2.4    - latest   ✓ 6/6 checks
 sapling   sp    0.3.2    - latest   ✓ 3/3 checks
 burrow    bw    0.3.0    - latest   - audit pending
-overstory ov    0.11.0   - latest   ✓ 11/11 checks
 warren    wr    0.3.0    - latest   - audit pending
-greenhouse grhs 0.1.2    - latest   ✓ 6/6 checks
 
 Last sync: 2 minutes ago
 Active agents: 3  |  Open issues: 12  |  Prompts: 7
@@ -203,7 +198,7 @@ Gathers data by running each tool's `--version` and `doctor --json` commands.
 
 A single-page GitHub Pages site for the ecosystem:
 
-- Stacked-layer logo (rendered with brand colors via CSS/SVG)
+- Stacked-layer ASCII logo (styled with brand colors via CSS/SVG)
 - One-paragraph description of the ecosystem
 - Card per tool: name, tagline, install command, link to repo
 - Architecture diagram showing relationships

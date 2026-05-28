@@ -1,13 +1,13 @@
 # os-eco Branding & Standards
 
 Canonical reference for visual identity, CLI conventions, and consistency standards
-across the os-eco tooling ecosystem (warren, burrow, plot, mulch, seeds, canopy, sapling, overstory).
+across the os-eco tooling ecosystem (warren, burrow, plot, mulch, seeds, canopy, sapling).
 
-Last verified: 2026-03-05 (full audit with per-file evidence). Burrow and Warren added 2026-05-13, audit pending. Plot added 2026-05-17, audit pending. Greenhouse archived 2026-05 — historical rows preserved with `[archived]` marker; gaps are no longer tracked.
+Last verified: 2026-03-05 (full audit with per-file evidence). Burrow and Warren added 2026-05-13, audit pending. Plot added 2026-05-17, audit pending. Overstory and greenhouse were archived 2026-05 and are no longer tracked.
 
 ## Status
 
-Rows are ordered by ecosystem tier: flagship → substrate → context primitives → runtime → alternative orchestrator.
+Rows are ordered by ecosystem tier: flagship → substrate → context primitives → runtime.
 
 | Tool | Version | Branding | CLI Standards | Remaining |
 |------|---------|----------|---------------|-----------|
@@ -18,8 +18,6 @@ Rows are ordered by ecosystem tier: flagship → substrate → context primitive
 | Seeds | 0.4.4 | complete | complete | — |
 | Canopy | 0.2.4 | complete | complete | — |
 | Sapling | 0.3.2 | complete | complete | — |
-| Overstory | 0.11.0 | complete | complete | — |
-| ~~Greenhouse~~ | 0.1.2 | partial | partial | **Archived 2026-05 — superseded by warren. Historical state preserved; no further work tracked.** |
 
 ## Quick Start
 
@@ -32,7 +30,7 @@ bun branding/preview.ts
 
 | File | What it covers |
 |------|---------------|
-| [visual-spec.md](visual-spec.md) | Color palette, logo, icons, message formats, help screen template |
+| [visual-spec.md](visual-spec.md) | Color palette, ASCII logo, icons, message formats, help screen template |
 | [cli-standards.md](cli-standards.md) | Flags, JSON envelope, error handling, version, arg parsing |
 | [documentation.md](documentation.md) | README template, badges, changelog format, npx support |
 | [roadmap.md](roadmap.md) | Future work: cli-common package, CI parity, man pages, website |

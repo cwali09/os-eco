@@ -2,7 +2,7 @@
 
 Run `bun branding/preview.ts` to see all of this rendered in your terminal.
 
-> **Greenhouse archived 2026-05** — its row in the color palette, banner art, and help-screen template tables is preserved as a historical record of v0.1.2 state at archival. The greenhouse brand color (`rgb(124, 179, 66)` sprout green) is retired and free for re-use by future tools.
+> **Overstory and greenhouse archived 2026-05** — their rows have been removed from the color palette, banner art, and help-screen template tables. The greenhouse brand color (`rgb(124, 179, 66)` sprout green) and overstory brand color (`rgb(46, 125, 50)` forest green) are retired and free for re-use by future tools.
 
 ---
 
@@ -20,9 +20,7 @@ Shared semantic colors handle status and feedback.
 | sapling | young tree green | `76, 175, 80` | `chalk.rgb(76, 175, 80)` |
 | canopy | deep green | `56, 142, 60` | `chalk.rgb(56, 142, 60)` |
 | burrow | warm clay | `121, 85, 72` | `chalk.rgb(121, 85, 72)` |
-| overstory | forest green | `46, 125, 50` | `chalk.rgb(46, 125, 50)` |
 | warren | slate | `82, 105, 110` | `chalk.rgb(82, 105, 110)` |
-| greenhouse | sprout green | `124, 179, 66` | `chalk.rgb(124, 179, 66)` |
 
 ### Semantic Colors
 
@@ -59,9 +57,7 @@ The primary ecosystem logo. Each line uses that tool's brand color.
 Tool name bold, description dim.
 
 ```
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  greenhouse  automation
 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  warren      cloud control plane
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  overstory   orchestration
 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  canopy      prompts
 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  sapling     agents
 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  burrow      sandbox
@@ -88,8 +84,6 @@ Maximum terminal compatibility. No unicode circles, no emoji.
 | `!` | blocked / warning | yellow | `chalk.yellow("!")` |
 
 All tools use these exact characters and colors for any status display.
-
-Note: Greenhouse currently uses custom circular icons (○ ◎ ◉) — needs migration to Set D.
 
 ---
 
@@ -156,7 +150,7 @@ IDs and cross-references always use accent (amber). Context words use dim.
 Issue seeds-a1b2 blocked by seeds-c3d4
 Record mx-04f2 in testing domain
 Prompt builder-prompt@3 extends base-prompt
-Agent builder-01 on branch ov/builder-01
+Agent builder-01 on branch wr/builder-01
 ```
 
 ---
@@ -205,8 +199,6 @@ Run '<alias> <command> --help' for command-specific help.
 | canopy | `canopy v0.2.4 — Prompt management & composition` |
 | sapling | `sapling v0.3.2 — Headless coding agent` |
 | burrow | `burrow v0.3.0 — OS-isolated sandbox runtime` |
-| overstory | `overstory v0.11.0 — Multi-agent orchestration` |
 | warren | `warren v0.3.0 — Self-hostable cloud control plane` |
-| greenhouse | `greenhouse v0.1.2 — Autonomous development daemon` |
 
-Note: Greenhouse does not yet implement Style A — uses Commander default help. Burrow and warren joined the ecosystem post-V1; Style A audit pending.
+Note: Burrow and warren joined the ecosystem post-V1; Style A audit pending.

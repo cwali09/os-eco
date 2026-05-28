@@ -84,34 +84,6 @@ Last full audit: 2026-03-05 against the versions noted in each tool's heading. B
 
 ---
 
-## Overstory (v0.11.0) — Fully Complete
-
-### Branding — Complete
-- [x] Apply forest palette (brand: `rgb(46, 125, 50)`, accent, muted) — done (v0.6.3, color.ts)
-- [x] Adopt help screen style A (see visual-spec.md) — done (v0.6.8, branded header in index.ts, verified v0.8.5)
-- [x] Adopt status icon set D (`- > x !`) — done (v0.6.6, migrated dashboard + all commands)
-- [x] Adopt message format standards (`✓ ✗ !`) — done (v0.6.6, fmt helpers in color.ts)
-
-### CLI Standards — Complete
-- [x] Migrate arg parsing to commander (~34 command files) — done (v0.6.3)
-- [x] Replace raw ANSI with chalk — done (v0.6.2, chalk v5)
-- [x] Standardize version output (bare semver) — done (VERSION constant is bare semver)
-- [x] Add `--version --json` (rich metadata output) — done (v0.6.8, JSON envelope with name/version/runtime/platform)
-- [x] Add `--quiet, -q` global flag — done (v0.6.8, index.ts)
-- [x] Add `--verbose` global flag — done (v0.6.8, index.ts)
-- [x] Add shell completions (`completions <shell>`) — done (bash/zsh/fish, completions.ts)
-- [x] Add typo suggestions for unknown commands — done (Levenshtein in index.ts)
-- [x] Add `--timing` flag — done (v0.7.4, global flag, outputs to stderr)
-- [x] Wrap JSON output in `{ success, command }` envelope — done (v0.7.4, json.ts with jsonOutput/jsonError helpers)
-- [x] Switch to `process.exitCode = 1` (no hard exit) — done (v0.7.4, primary pattern; process.exit(0) only for SIGINT cleanup and --version --json early exit)
-
-### Commands — Complete
-- [x] Add `ov upgrade` command (self-update + `--all` for sibling tools) — done (v0.7.4, with `--check`, `--all`, `--json`)
-- [x] Add ecosystem version check to `ov doctor` (check mulch/seeds/canopy) — done (v0.7.4, ecosystem check category)
-- [x] Implement `ov ecosystem` dashboard command — done (v0.7.4, registered via addCommand)
-
----
-
 ## Sapling (v0.3.2) — Fully Complete
 
 ### Branding
@@ -204,58 +176,24 @@ Brand color: `rgb(82, 105, 110)` (slate). Joined the ecosystem 2026-05-13. No it
 
 ---
 
-## Greenhouse (v0.1.2) — Archived 2026-05
-
-> **Archived 2026-05** — Greenhouse was superseded by warren, which absorbed the autonomous-loop role. The checklist below is preserved for historical reference; outstanding items will not be implemented.
-
-### Branding — Partial
-- [x] Apply forest palette (brand: `rgb(124, 179, 66)`, accent, muted) — done (v0.1.0, output.ts)
-- [ ] Adopt help screen style A (see visual-spec.md) — uses Commander default, not branded header with tool name in brand color + bold, version muted, tagline
-- [ ] Adopt status icon set D (`- > x !`) — uses custom circular icons (○ ◎ ◉ ⬆ ✓ ✗) instead of Set D
-- [x] Adopt message format standards (`✓ ✗ !`) — done (v0.1.0, printSuccess/Error/Warning in output.ts)
-
-### CLI Standards — Partial
-- [x] Migrate arg parsing to commander — done (v0.1.0, all 12 commands)
-- [x] Replace raw ANSI with chalk — done (v0.1.0, chalk v5.6.2)
-- [x] Standardize version flag to `-v, --version` — done (v0.1.0)
-- [x] Add `--version --json` (rich metadata output) — done (v0.1.0, outputs name/version/runtime/platform)
-- [x] Move VERSION to `export const VERSION` in entry point — done (v0.1.0, cli.ts)
-- [ ] Add `--quiet, -q` global flag — `--quiet` exists but missing `-q` short form
-- [x] Add `--verbose` global flag — done (v0.1.0)
-- [x] Add `--timing` flag — done (v0.1.0, outputs to stderr)
-- [x] Add `--json` flag — done (v0.1.0)
-- [ ] Switch to `process.exitCode = 1` (no hard exit) — mixed: some commands use process.exit(), others use process.exitCode
-- [ ] Add typo suggestions for unknown commands — generic "Run 'grhs --help'" message, no Levenshtein
-- [ ] Add shell completions (`completions <shell>`) — not implemented
-
-### Commands — Partial
-- [ ] Add `grhs upgrade` command (with `--check` and `--json`) — not implemented
-- [x] Add `grhs doctor` command (6 checks, `--json`) — done, but missing `--fix` flag
-
-### Documentation
-- [x] README.md with install, CLI reference, badges (npm, CI, license) — done
-- [x] CHANGELOG.md in Keep a Changelog format — done
-
----
-
 ## Cross-Cutting
 
 ### Documentation
-- [x] Unify all sub-repo READMEs to template (see documentation.md) — done for the original six (burrow + warren audit pending)
-- [x] Add consistent badge set to all repos (npm, CI, license) — done for all eight repos
-- [x] Adopt Keep a Changelog format in all repos — done for the original six (burrow + warren have CHANGELOG.md; format audit pending)
-- [x] Ensure `npx @os-eco/<tool>-cli` works for all tools — done for the original six (burrow + warren audit pending)
-- [x] Update root os-eco README as ecosystem landing page — done (8-tool layered ecosystem landing page with logo, workflow example, design principles)
-- [x] Align `.claude/commands/` across all sub-repos — done for the original six; burrow + warren pending
+- [x] Unify all sub-repo READMEs to template (see documentation.md) — done for the audited tools (burrow + warren audit pending)
+- [x] Add consistent badge set to all repos (npm, CI, license) — done for all active repos
+- [x] Adopt Keep a Changelog format in all repos — done for the audited tools (burrow + warren have CHANGELOG.md; format audit pending)
+- [x] Ensure `npx @os-eco/<tool>-cli` works for all tools — done for the audited tools (burrow + warren audit pending)
+- [x] Update root os-eco README as ecosystem landing page — done (layered ecosystem landing page with ASCII stacked-layers art, workflow example, design principles)
+- [x] Align `.claude/commands/` across all sub-repos — done for the audited tools; burrow + warren pending
 
 ### Infrastructure
 - [ ] Standardize CI workflows across all repos
 - [ ] Add version-sync CI check (package.json vs VERSION constant) — Seeds has this, Canopy doctor checks it
-- [ ] Create `@os-eco/cli-common` shared package — the original six tools all on commander+chalk and ready to extract; consume from burrow + warren once they're audited onto the same stack
+- [ ] Create `@os-eco/cli-common` shared package — the audited tools all on commander+chalk and ready to extract; consume from burrow + warren once they're audited onto the same stack
 
 ### Future
 - [ ] Cross-tool JSON piping tests
 - [ ] Man page generation
-- [ ] `ov init` bootstraps all tools
+- [ ] One-command bootstrap that initializes all tools
 - [ ] GitHub Pages website
 - [ ] Consistent spinner style for long-running commands

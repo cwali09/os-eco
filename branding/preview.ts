@@ -2,7 +2,7 @@
 /**
  * os-eco branding reference — run `bun branding/preview.ts`
  *
- * This is the canonical visual spec for all four CLIs.
+ * This is the canonical visual spec for the os-eco CLIs.
  * Point agents here so they know exactly what output should look like.
  */
 
@@ -12,7 +12,6 @@ const palette = {
     mulch:     "\x1b[38;2;139;90;43m",   // brown/soil
     seeds:     "\x1b[38;2;124;179;66m",   // sprout green
     canopy:    "\x1b[38;2;56;142;60m",    // deep green
-    overstory: "\x1b[38;2;27;94;32m",     // forest green
   },
   accent:  "\x1b[38;2;255;183;77m",       // amber — IDs, references
   muted:   "\x1b[38;2;120;120;110m",      // stone gray — metadata
@@ -35,7 +34,6 @@ const tools = [
   { key: "mulch",     alias: "ml", ver: "0.6.0", tag: "Structured expertise management", desc: "expertise" },
   { key: "seeds",     alias: "sd", ver: "0.2.2", tag: "Git-native issue tracking",       desc: "issues" },
   { key: "canopy",    alias: "cn", ver: "0.1.5", tag: "Prompt management & composition",  desc: "prompts" },
-  { key: "overstory", alias: "ov", ver: "0.6.3", tag: "Multi-agent orchestration",        desc: "orchestration" },
 ];
 
 // =====================================================================
@@ -114,7 +112,6 @@ console.log(`  ${B}Success${R} ${D}(tool brand color + ✓):${R}`);
 console.log(`  ${sd}${B}✓${R} ${sd}Created issue${R} ${palette.accent}seeds-a1b2${R}`);
 console.log(`  ${palette.brand.mulch}${B}✓${R} ${palette.brand.mulch}Recorded convention${R} ${D}in domain${R} ${palette.accent}testing${R}`);
 console.log(`  ${palette.brand.canopy}${B}✓${R} ${palette.brand.canopy}Emitted 7 prompts${R}`);
-console.log(`  ${palette.brand.overstory}${B}✓${R} ${palette.brand.overstory}Agent started${R} ${palette.accent}builder-01${R}`);
 console.log();
 console.log(`  ${B}Warning${R} ${D}(yellow + !):${R}`);
 console.log(`  ${palette.warn}${B}!${R} ${palette.warn}3 prompts are stale${R} ${D}— run cn emit --all${R}`);
@@ -131,10 +128,10 @@ hr("ID & reference highlighting");
 console.log(`  Issue ${palette.accent}${B}seeds-a1b2${R} ${D}blocked by${R} ${palette.accent}${B}seeds-c3d4${R}`);
 console.log(`  Record ${palette.accent}${B}mx-04f2${R} ${D}in${R} ${palette.brand.canopy}testing${R} ${D}domain${R}`);
 console.log(`  Prompt ${palette.accent}${B}builder-prompt@3${R} ${D}extends${R} ${palette.accent}${B}base-prompt${R}`);
-console.log(`  Agent ${palette.accent}${B}builder-01${R} ${D}on branch${R} ${palette.accent}${B}ov/builder-01${R}`);
+console.log(`  Agent ${palette.accent}${B}builder-01${R} ${D}on branch${R} ${palette.accent}${B}wr/builder-01${R}`);
 
 // ── 7. Dashboard example ─────────────────────────────────────────────
-hr("ov ecosystem dashboard");
+hr("ecosystem dashboard");
 
 console.log(`  ${B}os-eco${R} ${D}ecosystem status${R}`);
 console.log();
@@ -143,7 +140,6 @@ console.log(`  ${D}${"─".repeat(45)}${R}`);
 console.log(`  ${palette.brand.mulch}${B}mulch${R}    ${D}ml${R}   ${B}0.6.0${R}      ${palette.success}- latest${R}   ${palette.success}✓ 8/8 checks${R}`);
 console.log(`  ${palette.brand.seeds}${B}seeds${R}    ${D}sd${R}   ${B}0.2.2${R}      ${palette.success}- latest${R}   ${palette.success}✓ 9/9 checks${R}`);
 console.log(`  ${palette.brand.canopy}${B}canopy${R}   ${D}cn${R}   ${B}0.1.5${R}      ${palette.success}- latest${R}   ${palette.success}✓ healthy${R}`);
-console.log(`  ${palette.brand.overstory}${B}overstory${R} ${D}ov${R}  ${B}0.6.3${R}      ${palette.success}- latest${R}   ${palette.success}✓ 9/9 checks${R}`);
 console.log();
 console.log(`  ${D}Last sync: 2 minutes ago${R}`);
 console.log(`  ${D}Active agents: 3  |  Open issues: 12  |  Prompts: 7${R}`);
