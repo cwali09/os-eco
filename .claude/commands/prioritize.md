@@ -19,7 +19,7 @@ Use the Task tool to spawn **three parallel agents**:
 - Note any issues with community engagement (comments, thumbs-up, external authors)
 
 ### Agent B: Seeds Issues
-- For each sub-repo (`warren/`, `burrow/`, `plot/`, `mulch/`, `seeds/`, `canopy/`, `sapling/`) and the root (`./`):
+- For each sub-repo (`warren/`, `burrow/`, `plot/`, `mulch/`, `seeds/`, `canopy/`, `sapling/`, `trellis/`) and the root (`./`):
   - Run `sd list` and `sd ready` (if seeds is initialized in that directory)
   - For each open issue, run `sd show <id>` to get full details
   - Capture: id, title, type, priority, status, description, dependencies/blockers

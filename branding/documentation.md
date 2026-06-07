@@ -50,6 +50,7 @@ npx @os-eco/<tool>-cli --help
 
 \`\`\`
 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  warren      cloud control plane + automation
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  trellis     standards
 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  canopy      prompts
 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  sapling     agents
 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  burrow      sandbox
@@ -126,7 +127,7 @@ The os-eco root README serves as the ecosystem landing page:
 
 - Stacked-layer logo (in the brand colors, or as plain text for GitHub)
 - One-sentence description of each tool
-- Install-all snippet: `bun install -g @os-eco/mulch-cli @os-eco/seeds-cli @os-eco/canopy-cli @os-eco/sapling-cli @os-eco/burrow-cli @os-eco/warren-cli`
+- Install-all snippet: `bun install -g @os-eco/mulch-cli @os-eco/seeds-cli @os-eco/canopy-cli @os-eco/sapling-cli @os-eco/burrow-cli @os-eco/warren-cli @os-eco/trellis-cli`
 - Relationship graph showing how tools interact
 - Links to each sub-repo
 - "Getting Started" section showing a full workflow across tools

@@ -12,6 +12,7 @@ const palette = {
     mulch:     "\x1b[38;2;139;90;43m",   // brown/soil
     seeds:     "\x1b[38;2;124;179;66m",   // sprout green
     canopy:    "\x1b[38;2;56;142;60m",    // deep green
+    trellis:   "\x1b[38;2;46;125;50m",    // forest green (re-used from retired overstory)
   },
   accent:  "\x1b[38;2;255;183;77m",       // amber — IDs, references
   muted:   "\x1b[38;2;120;120;110m",      // stone gray — metadata
@@ -34,6 +35,7 @@ const tools = [
   { key: "mulch",     alias: "ml", ver: "0.6.0", tag: "Structured expertise management", desc: "expertise" },
   { key: "seeds",     alias: "sd", ver: "0.2.2", tag: "Git-native issue tracking",       desc: "issues" },
   { key: "canopy",    alias: "cn", ver: "0.1.5", tag: "Prompt management & composition",  desc: "prompts" },
+  { key: "trellis",   alias: "trellis", ver: "0.0.1", tag: "Agentic-readiness audit & sync", desc: "standards" },
 ];
 
 // =====================================================================

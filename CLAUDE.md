@@ -1,12 +1,12 @@
 # os-eco
 
-Meta-project for the AI agent tooling ecosystem. This repo tracks cross-cutting concerns across **seven integrated tools**, each living in its own sub-repo. (Two further tools, **greenhouse** and **overstory**, have been archived — see "Retired tools" below.)
+Meta-project for the AI agent tooling ecosystem. This repo tracks cross-cutting concerns across **eight integrated tools**, each living in its own sub-repo. (Two further tools, **greenhouse** and **overstory**, have been archived — see "Retired tools" below.)
 
 **Warren is the headline project.** It is the self-hostable control plane that orchestrates ephemeral cloud agents and closes the autonomous loop (GitHub → dispatch → PR). The rest of os-eco is the toolchain warren stands on. Each piece works standalone too, but warren is where the ecosystem narrative begins.
 
 ## Ecosystem Overview
 
-Tools group by role: **warren** is the flagship orchestrator. Underneath sit the **substrate** (sandbox + coordination), the **context primitives** (what agents read & write), and a **runtime** (single-agent execution).
+Tools group by role: **warren** is the flagship orchestrator. Underneath sit the **substrate** (sandbox + coordination), the **context primitives** (what agents read & write), and a **runtime** (single-agent execution). Alongside the fleet sits a **standards** layer (readiness audit) that measures every repo, warren included.
 
 ### Flagship — agent control plane
 
@@ -35,6 +35,12 @@ Tools group by role: **warren** is the flagship orchestrator. Underneath sit the
 |------|-----|-----|---------|----------|
 | **Sapling** | `sapling` / `sp` | `@os-eco/sapling-cli` | Headless coding agent with proactive context management. Alternative runtime warren can dispatch alongside Claude Code. | `sapling/` |
 
+### Standards — fleet readiness & audit
+
+| Tool | CLI | npm | Purpose | Sub-repo |
+|------|-----|-----|---------|----------|
+| **Trellis** | `trellis` | `@os-eco/trellis-cli` | Agentic-readiness audit & sync — scores repos against a versioned 9-category rubric (maturity Level 1–5), detects canonical-config drift, keeps a fleet in standard. Pre-release. | `trellis/` |
+
 ### How they fit together
 
 ```
@@ -47,6 +53,8 @@ Tools group by role: **warren** is the flagship orchestrator. Underneath sit the
               Burrow          Mulch          Sapling
               Plot            Seeds
                               Canopy
+        ────────────────────────────────────────────────
+              Trellis  (standards — audits every repo)
 ```
 
 - **Warren** is the flagship — a self-hostable HTTP/UI control plane that polls GitHub for triaged issues, dispatches runs, opens PRs, and runs each agent inside a burrow sandbox. Absorbed greenhouse's daemon role in 2026-05.
@@ -56,6 +64,7 @@ Tools group by role: **warren** is the flagship orchestrator. Underneath sit the
 - **Seeds** is the issue tracker — `sd create` / `sd ready` / `sd close` drive the work queue.
 - **Canopy** is the prompt library — `cn emit` renders prompts for agent consumption.
 - **Sapling** is an alternative coding agent runtime.
+- **Trellis** is the standards layer — `trellis audit` scores a repo's agent-readiness against a versioned rubric; `trellis drift` / `trellis fleet` keep the whole fleet on canonical configs.
 
 Each sub-repo has its own `CLAUDE.md` with tool-specific conventions, architecture, and commands.
 
@@ -78,6 +87,7 @@ cd mulch       && bun test && bun run lint && bun run typecheck
 cd seeds       && bun test && bun run lint && bun run typecheck
 cd canopy      && bun test && bun run lint && bun run typecheck
 cd sapling     && bun test && bun run lint && bun run typecheck
+cd trellis     && bun test && bun run lint && bun run typecheck
 ```
 
 ## Retired tools

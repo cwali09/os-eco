@@ -1,7 +1,7 @@
 # Implementation Checklists
 
 Per-tool TODO lists. Check items off as work is completed.
-Last full audit: 2026-03-05 against the versions noted in each tool's heading. Burrow and warren joined post-V1 (added 2026-05-13) and their audit is pending. Version headings below reflect current shipped versions; any divergence from the audit baseline is a re-audit candidate.
+Last full audit: 2026-03-05 against the versions noted in each tool's heading. Burrow and warren joined post-V1 (added 2026-05-13) and their audit is pending; trellis joined 2026-06-06 (pre-release) and its audit is pending. Version headings below reflect current shipped versions; any divergence from the audit baseline is a re-audit candidate.
 
 ---
 
@@ -172,6 +172,35 @@ Brand color: `rgb(82, 105, 110)` (slate). Joined the ecosystem 2026-05-13. No it
 
 ### Documentation
 - [x] README.md with install, CLI reference, badges — done (verified 2026-05-13)
+- [x] CHANGELOG.md — done
+
+---
+
+## Trellis (v0.0.1) — Pre-release, Audit Pending
+
+Brand color: `rgb(46, 125, 50)` (forest green, re-used from retired overstory). Joined the ecosystem 2026-06-06; still pre-release (MVP tracked in `trellis/SPEC.md` §14). No items below have been verified against trellis's actual source — schedule a full audit against `visual-spec.md` + `cli-standards.md` once the MVP lands.
+
+### Branding — Pending
+- [ ] Apply forest palette (brand: `rgb(46, 125, 50)`, accent, muted)
+- [ ] Adopt help screen style A (see visual-spec.md)
+- [ ] Adopt status icon set D (`- > x !`)
+- [ ] Adopt message format standards (`✓ ✗ !`)
+
+### CLI Standards — Pending
+- [ ] Commander + chalk arg parsing
+- [ ] `-v, --version` flag with `--version --json` rich metadata
+- [ ] Global flags: `--json`, `--quiet, -q`, `--verbose`, `--timing`
+- [ ] `process.exitCode = 1` (no hard exit) — note: trellis's `--fail-on` CI-gate contract intentionally uses exit code `2` for policy trips (SPEC §12); audit should honor that exception
+- [ ] `{ success, command }` JSON envelope
+- [ ] Typo suggestions for unknown commands
+- [ ] Shell completions (`completions <shell>`)
+
+### Commands — Pending
+- [ ] `trellis upgrade` (with `--check` and `--json`)
+- [ ] `trellis doctor` (with `--fix` and `--json`)
+
+### Documentation
+- [x] README.md with install, CLI reference, badges — done (2026-06-06)
 - [x] CHANGELOG.md — done
 
 ---

@@ -4,7 +4,7 @@ Guidance for AI agents (and humans) working in the **os-eco** meta-repo.
 
 os-eco is the meta-project for the AI agent tooling ecosystem. It has **no
 package.json, no source, and no test suite of its own** — it is a thin
-coordination layer that tracks cross-cutting concerns across **seven
+coordination layer that tracks cross-cutting concerns across **eight
 integrated tools**, each of which lives in its own independent sub-repo. (Two
 further tools, **greenhouse** and **overstory**, have been archived — see
 "Retired tools" below.) When an agent works here, it is almost always editing root-level docs,
@@ -25,7 +25,9 @@ narrative begins.
 
 Tools group by role: **warren** is the flagship orchestrator. Underneath sit
 the **substrate** (sandbox + coordination), the **context primitives** (what
-agents read & write), and a **runtime** (single-agent execution).
+agents read & write), and a **runtime** (single-agent execution). Alongside
+the fleet sits a **standards** layer (readiness audit) that measures every
+repo, warren included.
 
 ### Flagship — agent control plane
 
@@ -54,6 +56,12 @@ agents read & write), and a **runtime** (single-agent execution).
 |------|-----|-----|---------|----------|
 | **Sapling** | `sapling` / `sp` | `@os-eco/sapling-cli` | Headless coding agent with proactive context management. Alternative runtime warren can dispatch alongside Claude Code. | `sapling/` |
 
+### Standards — fleet readiness & audit
+
+| Tool | CLI | npm | Purpose | Sub-repo |
+|------|-----|-----|---------|----------|
+| **Trellis** | `trellis` | `@os-eco/trellis-cli` | Agentic-readiness audit & sync — scores repos against a versioned 9-category rubric (Level 1–5), detects canonical-config drift, keeps a fleet in standard. Pre-release. | `trellis/` |
+
 ### How they fit together
 
 ```
@@ -66,6 +74,8 @@ agents read & write), and a **runtime** (single-agent execution).
               Burrow          Mulch          Sapling
               Plot            Seeds
                               Canopy
+        ────────────────────────────────────────────────
+              Trellis  (standards — audits every repo)
 ```
 
 - **Warren** polls GitHub for triaged issues, dispatches runs, opens PRs, and
@@ -78,6 +88,8 @@ agents read & write), and a **runtime** (single-agent execution).
 - **Seeds** is the issue tracker — `sd create` / `sd ready` / `sd close`.
 - **Canopy** is the prompt library — `cn emit` renders prompts for agents.
 - **Sapling** is an alternative coding-agent runtime.
+- **Trellis** is the standards layer — `trellis audit` scores agent-readiness;
+  `trellis drift` / `trellis fleet` keep repos on canonical configs.
 
 ## Root-Level Commands
 
@@ -117,7 +129,7 @@ integration.
 - Sub-repos are independently versioned and managed — each has its own git
   history. **They are off-limits to root-scoped commits.**
 - The root git repo gitignores all sub-repo directories (`warren/`, `burrow/`,
-  `plot/`, `mulch/`, `seeds/`, `canopy/`, `sapling/`). A
+  `plot/`, `mulch/`, `seeds/`, `canopy/`, `sapling/`, `trellis/`). A
   root-scoped commit must never include a path inside one of those.
 - Cross-repo issues go in root `.seeds/`; per-tool issues go in each
   sub-repo's `.seeds/`.

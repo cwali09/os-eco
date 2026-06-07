@@ -5,7 +5,7 @@ description: Audit shared dependencies for version mismatches and outdated packa
 
 ## description
 
-Compare npm dependencies across all seven active ecosystem repos (warren, burrow, plot, mulch, seeds, canopy, sapling). Identify version mismatches, outdated packages, and opportunities for alignment. (Greenhouse and overstory were also tools here — both archived 2026-05, superseded by warren; do not include in scans.)
+Compare npm dependencies across all eight active ecosystem repos (warren, burrow, plot, mulch, seeds, canopy, sapling, trellis). Identify version mismatches, outdated packages, and opportunities for alignment. (Greenhouse and overstory were also tools here — both archived 2026-05, superseded by warren; do not include in scans.)
 
 **Argument:** `$ARGUMENTS` — optional: a package name to focus on (e.g., `chalk`, `commander`). If empty, audit all shared dependencies.
 
@@ -14,7 +14,7 @@ Compare npm dependencies across all seven active ecosystem repos (warren, burrow
 Use the Agent tool to spawn **two parallel agents**:
 
 ### Agent A: Dependency extraction
-For each active sub-repo (warren, burrow, plot, mulch, seeds, canopy, sapling):
+For each active sub-repo (warren, burrow, plot, mulch, seeds, canopy, sapling, trellis):
 - Read `package.json` and extract `dependencies` and `devDependencies`
 - Read `bun.lock` (or `bun.lockb`) if present for pinned versions
 - Capture: package name, declared version range, resolved version (from lock), dep type (prod/dev)
@@ -33,8 +33,8 @@ After both agents return, produce:
 
 ### Shared Dependency Matrix
 
-| Package | warren | burrow | plot | mulch | seeds | canopy | sapling | Aligned? |
-|---------|--------|--------|------|-------|-------|--------|---------|----------|
+| Package | warren | burrow | plot | mulch | seeds | canopy | sapling | trellis | Aligned? |
+|---------|--------|--------|------|-------|-------|--------|---------|---------|----------|
 
 Show the version used in each repo. Mark `Aligned?` as `✓` if all repos use the same version, `✗` if versions differ.
 

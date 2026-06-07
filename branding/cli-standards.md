@@ -1,6 +1,6 @@
 # CLI Standards
 
-Technical conventions that all tools must follow. The original audited tools were mulch, seeds, canopy, and sapling; overstory and greenhouse have since been archived. Burrow (v0.3.0) and warren (v0.3.0) joined post-V1 — their compliance with this spec is not yet audited and is tracked as pending in `checklists.md`.
+Technical conventions that all tools must follow. The original audited tools were mulch, seeds, canopy, and sapling; overstory and greenhouse have since been archived. Burrow (v0.3.0) and warren (v0.3.0) joined post-V1, and trellis (v0.0.1, pre-release) joined 2026-06-06 — their compliance with this spec is not yet audited and is tracked as pending in `checklists.md`.
 
 ---
 
@@ -15,7 +15,7 @@ All tools use `commander` (v14+) for arg parsing and `chalk` (v5+) for color out
 | Canopy | yes | yes | done (v0.2.2, register pattern) |
 | Sapling | yes | yes | done (v0.3.1) |
 
-All audited tools are fully migrated to Commander + Chalk. Burrow and warren audit pending.
+All audited tools are fully migrated to Commander + Chalk. Burrow, warren, and trellis audit pending (trellis is commander-based per its SPEC; unverified).
 
 ---
 

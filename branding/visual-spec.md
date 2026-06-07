@@ -2,7 +2,7 @@
 
 Run `bun branding/preview.ts` to see all of this rendered in your terminal.
 
-> **Overstory and greenhouse archived 2026-05** — their rows have been removed from the color palette, banner art, and help-screen template tables. The greenhouse brand color (`rgb(124, 179, 66)` sprout green) and overstory brand color (`rgb(46, 125, 50)` forest green) are retired and free for re-use by future tools.
+> **Overstory and greenhouse archived 2026-05** — their rows have been removed from the color palette, banner art, and help-screen template tables. The greenhouse brand color (`rgb(124, 179, 66)` sprout green) and overstory brand color (`rgb(46, 125, 50)` forest green) were retired and freed for re-use by future tools. The forest green was re-used by **trellis** (added 2026-06-06).
 
 ---
 
@@ -21,6 +21,7 @@ Shared semantic colors handle status and feedback.
 | canopy | deep green | `56, 142, 60` | `chalk.rgb(56, 142, 60)` |
 | burrow | warm clay | `121, 85, 72` | `chalk.rgb(121, 85, 72)` |
 | warren | slate | `82, 105, 110` | `chalk.rgb(82, 105, 110)` |
+| trellis | forest green | `46, 125, 50` | `chalk.rgb(46, 125, 50)` |
 
 ### Semantic Colors
 
@@ -58,6 +59,7 @@ Tool name bold, description dim.
 
 ```
 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  warren      cloud control plane
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  trellis     standards
 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  canopy      prompts
 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  sapling     agents
 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  burrow      sandbox
@@ -200,5 +202,6 @@ Run '<alias> <command> --help' for command-specific help.
 | sapling | `sapling v0.3.2 — Headless coding agent` |
 | burrow | `burrow v0.3.0 — OS-isolated sandbox runtime` |
 | warren | `warren v0.3.0 — Self-hostable cloud control plane` |
+| trellis | `trellis v0.0.1 — Agentic-readiness audit & sync` |
 
-Note: Burrow and warren joined the ecosystem post-V1; Style A audit pending.
+Note: Burrow and warren joined the ecosystem post-V1; trellis joined 2026-06-06 (pre-release); Style A audit pending for all three.

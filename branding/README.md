@@ -1,13 +1,13 @@
 # os-eco Branding & Standards
 
 Canonical reference for visual identity, CLI conventions, and consistency standards
-across the os-eco tooling ecosystem (warren, burrow, plot, mulch, seeds, canopy, sapling).
+across the os-eco tooling ecosystem (warren, burrow, plot, mulch, seeds, canopy, sapling, trellis).
 
-Last verified: 2026-03-05 (full audit with per-file evidence). Burrow and Warren added 2026-05-13, audit pending. Plot added 2026-05-17, audit pending. Overstory and greenhouse were archived 2026-05 and are no longer tracked.
+Last verified: 2026-03-05 (full audit with per-file evidence). Burrow and Warren added 2026-05-13, audit pending. Plot added 2026-05-17, audit pending. Trellis added 2026-06-06 (pre-release), audit pending. Overstory and greenhouse were archived 2026-05 and are no longer tracked.
 
 ## Status
 
-Rows are ordered by ecosystem tier: flagship → substrate → context primitives → runtime.
+Rows are ordered by ecosystem tier: flagship → substrate → context primitives → runtime → standards.
 
 | Tool | Version | Branding | CLI Standards | Remaining |
 |------|---------|----------|---------------|-----------|
@@ -18,6 +18,7 @@ Rows are ordered by ecosystem tier: flagship → substrate → context primitive
 | Seeds | 0.4.4 | complete | complete | — |
 | Canopy | 0.2.4 | complete | complete | — |
 | Sapling | 0.3.2 | complete | complete | — |
+| Trellis | 0.0.1 | pending | pending | Pre-release; full audit against visual-spec.md + cli-standards.md once the MVP lands |
 
 ## Quick Start
 

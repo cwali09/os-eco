@@ -7,6 +7,7 @@ overstory/
 plot/
 sapling/
 seeds/
+trellis/
 warren/
 
 # Local logs / scratch
@@ -30,3 +31,6 @@ dist/
 coverage/
 test-results/
 *.log
+
+# Private agentic-readiness rubric
+notes/PRIVATE-rubric/

@@ -7,6 +7,7 @@
 [![Seeds CI](https://github.com/jayminwest/seeds/actions/workflows/ci.yml/badge.svg)](https://github.com/jayminwest/seeds/actions/workflows/ci.yml)
 [![Canopy CI](https://github.com/jayminwest/canopy/actions/workflows/ci.yml/badge.svg)](https://github.com/jayminwest/canopy/actions/workflows/ci.yml)
 [![Sapling CI](https://github.com/jayminwest/sapling/actions/workflows/ci.yml/badge.svg)](https://github.com/jayminwest/sapling/actions/workflows/ci.yml)
+[![Trellis CI](https://github.com/jayminwest/trellis/actions/workflows/ci.yml/badge.svg)](https://github.com/jayminwest/trellis/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 A self-hostable control plane for AI coding agents — and the integrated toolchain it sits on top of.
@@ -41,6 +42,8 @@ The rest of os-eco is the toolchain warren stands on. Each piece works standalon
               Burrow          Mulch          Sapling
               Plot            Seeds
                               Canopy
+        ────────────────────────────────────────────────
+              Trellis  (standards — audits every repo)
 ```
 
 ### Substrate — sandbox & coordination
@@ -63,6 +66,12 @@ The rest of os-eco is the toolchain warren stands on. Each piece works standalon
 | Tool | CLI | npm | What it does |
 |------|-----|-----|--------------|
 | [**Sapling**](https://github.com/jayminwest/sapling) | `sp` | [![npm](https://img.shields.io/npm/v/@os-eco/sapling-cli)](https://www.npmjs.com/package/@os-eco/sapling-cli) | Headless coding agent with proactive context management between every LLM call. An alternative runtime warren can dispatch alongside Claude Code. |
+
+### Standards — fleet readiness & audit
+
+| Tool | CLI | npm | What it does |
+|------|-----|-----|--------------|
+| [**Trellis**](https://github.com/jayminwest/trellis) | `trellis` | [![npm](https://img.shields.io/npm/v/@os-eco/trellis-cli)](https://www.npmjs.com/package/@os-eco/trellis-cli) | Agentic-readiness audit & sync — scores any repo against a versioned 9-category rubric (maturity Level 1–5), detects canonical-config drift, and keeps a fleet of repos in standard. Audits every repo in the ecosystem, warren included. Pre-release (`0.0.1`). |
 
 ## Shared design principles
 
@@ -99,6 +108,9 @@ bun install -g @os-eco/plot-cli       # coordination
 
 # Runtime
 bun install -g @os-eco/sapling-cli    # headless agent
+
+# Standards
+bun install -g @os-eco/trellis-cli    # readiness audit (pre-release)
 ```
 
 Initialize the data layer in a project:
@@ -126,6 +138,10 @@ sd close sd-a1b2
 plot init "Add OAuth to billing portal"
 plot attach plot-abc1 seeds_issue:sd-a1b2 --role tracks
 
+# Keep the repo agent-ready via trellis
+trellis audit .                       # score agent-readiness (Level 1-5)
+trellis drift .                       # detect canonical-config drift
+
 # Cloud orchestration via warren
 # (see warren/README.md for the full UI + API surface)
 ```
@@ -143,6 +159,7 @@ os-eco/
   seeds/           # sub-repo: @os-eco/seeds-cli          — issues
   canopy/          # sub-repo: @os-eco/canopy-cli         — prompts
   sapling/         # sub-repo: @os-eco/sapling-cli        — headless agent
+  trellis/         # sub-repo: @os-eco/trellis-cli        — readiness audit & fleet standards
   branding/        # shared visual spec, CLI standards, checklists
   templates/       # portable templates; see templates/l5-toolkit/ for the L5 readiness kit
   .mulch/          # ecosystem-level expertise
@@ -161,6 +178,7 @@ cd mulch      && bun test && bun run lint && bun run typecheck
 cd seeds      && bun test && bun run lint && bun run typecheck
 cd canopy     && bun test && bun run lint && bun run typecheck
 cd sapling    && bun test && bun run lint && bun run typecheck
+cd trellis    && bun test && bun run lint && bun run typecheck
 ```
 
 ## Retired tools
